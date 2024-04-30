@@ -1,0 +1,23 @@
+.dropdown-toggle::after {
+    display: none;
+  }
+.text-decoration-none{
+  text-decoration: none!important;
+}
+
+.icon-width { width: 2rem;}
+
+
+
+  @media (max-width: 992px) {
+    .search-form-desktop {
+        display: none;
+    }
+}
+
+.imagen-redonda {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  object-fit: cover;
+}

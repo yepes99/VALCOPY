@@ -1,0 +1,11 @@
+SQLSTATE[HY000] [1045] Access denied for user ''@'localhost' (using password: NO)## Fichero: W:\Server XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 18##Código: 1045##Instante: 0.40435900 1706077761
+SQLSTATE[HY000] [1045] Access denied for user ''@'localhost' (using password: NO)## Fichero: W:\Server XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 18##Código: 1045##Instante: 0.78348100 1706077825
+SQLSTATE[HY000] [1045] Access denied for user ''@'localhost' (using password: NO)## Fichero: W:\Server XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 18##Código: 1045##Instante: 0.57720000 1706077899
+SQLSTATE[HY000] [1049] Unknown database 'inkbyte'## Fichero: W:\Server XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 18##Código: 1049##Instante: 0.46712200 1706077916
+SQLSTATE[HY000] [1049] Unknown database 'inkbyte'## Fichero: W:\Server XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 18##Código: 1049##Instante: 0.26315200 1706077929
+SQLSTATE[HY000] [1049] Unknown database 'inkbyte'## Fichero: W:\Server XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 18##Código: 1049##Instante: 0.12355100 1706078037
+SQLSTATE[HY000] [1049] Unknown database 'inkbyte'## Fichero: W:\Server XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 19##Código: 1049##Instante: 0.44242900 1706078267
+SQLSTATE[HY000] [1049] Unknown database 'inkbyte'## Fichero: W:\Server XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 19##Código: 1049##Instante: 0.55347800 1706078474
+SQLSTATE[HY000] [1049] Unknown database 'inkbyte'## Fichero: W:\Server XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 19##Código: 1049##Instante: 0.58005900 1706079040
+SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'usuario' already exists## Fichero: W:\XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 31##Código: 42S01##Instante: 0.34984900 1706831055
+SQLSTATE[21S01]: Insert value list does not match column list: 1136 Column count doesn't match value count at row 1## Fichero: W:\XAMPP\htdocs\DWES\GitRepos\InkByte\app\modelo\crearBD.php## Línea: 31##Código: 21S01##Instante: 0.64390300 1707266988

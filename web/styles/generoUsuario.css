@@ -1,0 +1,219 @@
+.btn-check {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+
+.btn-outline-primary {
+    cursor: pointer;
+}
+
+
+.terror:checked + .terror-label,
+.terror:hover + .terror-label {
+    background-color: #8B4513;
+    color: #fff;
+    border: 1px solid #8B4513;
+}
+.terror-label {
+    border: 1px solid #8B4513;
+    color: #8B4513;
+}
+
+
+.romance:checked + .romance-label,
+.romance:hover + .romance-label {
+    background-color: #FF69B4;
+    color: #fff;
+    border: 1px solid #FF69B4;
+}
+.romance-label {
+    border: 1px solid #FF69B4;
+    color: #FF69B4;
+}
+
+
+.fantasia:checked + .fantasia-label,
+.fantasia:hover + .fantasia-label {
+    background-color: #9370DB;
+    color: #fff;
+    border: 1px solid #9370DB;
+}
+.fantasia-label {
+    border: 1px solid #9370DB;
+    color: #9370DB;
+}
+
+
+.cficcion:checked + .cficcion-label,
+.cficcion:hover + .cficcion-label {
+    background-color: #00CED1;
+    color: #000;
+    border: 1px solid #00CED1;
+}
+.cficcion-label {
+    border: 1px solid #00CED1;
+    color: #00CED1;
+}
+
+
+.historia:checked + .historia-label,
+.historia:hover + .historia-label {
+    background-color: #FA8072;
+    color: #fff;
+    border: 1px solid #FA8072;
+}
+.historia-label {
+    border: 1px solid #FA8072;
+    color: #FA8072;
+}
+
+
+.arte:checked + .arte-label,
+.arte:hover + .arte-label {
+    background-color: #5F9EA0;
+    color: #fff;
+    border: 1px solid #5F9EA0;
+}
+.arte-label {
+    border: 1px solid #5F9EA0;
+    color: #5F9EA0;
+}
+
+
+
+.thriller:checked + .thriller-label,
+.thriller:hover + .thriller-label {
+    background-color: #1E90FF;
+    color: #fff;
+    border: 1px solid #1E90FF;
+}
+.thriller-label {
+    border: 1px solid #1E90FF;
+    color: #1E90FF;
+}
+
+
+.poesia:checked + .poesia-label,
+.poesia:hover + .poesia-label {
+    background-color: #FF6347;
+    color: #fff;
+    border: 1px solid #FF6347;
+}
+.poesia-label {
+    border: 1px solid #FF6347;
+    color: #FF6347;
+}
+
+
+.drama:checked + .drama-label,
+.drama:hover + .drama-label {
+    background-color: #FF8C00;
+    color: #fff;
+    border: 1px solid #FF8C00;
+}
+.drama-label {
+    border: 1px solid #FF8C00;
+    color: #FF8C00;
+}
+
+
+.biografia:checked + .biografia-label,
+.biografia:hover + .biografia-label {
+    background-color: #FFA07A;
+    color: #fff;
+    border: 1px solid #FFA07A;
+}
+.biografia-label {
+    border: 1px solid #FFA07A;
+    color: #FFA07A;
+}
+
+
+
+.misterio:checked + .misterio-label,
+.misterio:hover + .misterio-label {
+    background-color: #8A2BE2;
+    color: #fff;
+    border: 1px solid #8A2BE2;
+}
+.misterio-label {
+    border: 1px solid #8A2BE2;
+    color: #8A2BE2;
+}
+
+
+.policiaca:checked + .policiaca-label,
+.policiaca:hover + .policiaca-label {
+    background-color: #DC143C;
+    color: #fff;
+    border: 1px solid #DC143C;
+}
+.policiaca-label {
+    border: 1px solid #DC143C;
+    color: #DC143C;
+}
+
+
+#contenedorImagen{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: 20px;
+    border: 2px solid #ccc;
+    cursor:pointer;
+    background-color: #333;
+}
+
+#vistaImagen{
+    width: 102%;
+    height: 102%;
+    object-fit: cover;
+    border: none;
+    border-radius: 50%;
+}
+
+
+#imagePreview{
+    width: 102%;
+    height: 102%;
+    object-fit: cover;
+    border: none;
+    border-radius: 50%;
+}
+
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border:none;
+  }
+
+  .button-pink {
+    background-color: #ff6b9c;
+    color: #fff;
+  }
+
+
+  .button-pink:hover {
+    background-color: #ff4081;
+  }
+
+
+@media (max-width: 992px){
+    .contenedorPerfil, .descripcion{
+        flex-direction: column;
+        padding-left:0px;
+    }
+
+    .libro{
+        display:none;
+    }
+
+}
