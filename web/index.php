@@ -29,7 +29,8 @@ $map = array(
     // 'home' => array('controller' => 'Controller', 'action' => 'home', 'nivel' => 0),
     
     'inicio' => array('controller' => 'Controller', 'action' => 'inicio', 'nivel' => 0),
-    'registro' => array('controller' => 'Controller', 'action' => 'registro', 'nivel' => 0)
+    'registro' => array('controller' => 'Controller', 'action' => 'registro', 'nivel' => 0),
+    'inicioSesion' => array('controller' => 'Controller', 'action' => 'inicioSesion', 'nivel' => 0)
     
     
 );

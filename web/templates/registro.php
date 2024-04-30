@@ -20,7 +20,7 @@
                     <label class="form-check-label" for="terms">Acepto los términos y condiciones</label>
                 </div>
                 <input type="submit" class="btn btn-primary" name="bAceptar"></input>
-                <p class="mt-3 text-center">¿Ya tienes una cuenta? <a href="#" onclick="toggleForm();">Inicia sesión</a></p>
+                <p class="mt-3 text-center">¿Ya tienes una cuenta? <a href="index.php?ctl=inicioSesion" onclick="toggleForm();">Inicia sesión</a></p>
             </form>
         </div>
     </div>
