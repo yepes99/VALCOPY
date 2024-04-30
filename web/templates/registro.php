@@ -19,7 +19,7 @@
                     <input type="checkbox" class="form-check-input" id="terms" name="terminos" required>
                     <label class="form-check-label" for="terms">Acepto los términos y condiciones</label>
                 </div>
-                <button type="submit" class="btn btn-primary">Registrarse</button>
+                <button type="submit" class="btn btn-primary" value="bACeptar">Registrarse</button>
                 <p class="mt-3 text-center">¿Ya tienes una cuenta? <a href="#" onclick="toggleForm();">Inicia sesión</a></p>
             </form>
         </div>
