@@ -1,5 +1,7 @@
 
 
+<?php include('./templates/layout.php'); ?>
+     
       <section id="inicio">
         <div class="welcome" style="border: 2px solid #42b7ca;">
           <div class="content rounded-3 p-3" onclick="mostrarInicio()">
