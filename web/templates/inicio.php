@@ -1,7 +1,7 @@
       
     <?php include('./templates/layout.php'); ?>
      
-    <!-- Start Hero Section -->
+
 	 <!-- Start Hero Section -->
 	 <section id="hero">
 		<div class="container">

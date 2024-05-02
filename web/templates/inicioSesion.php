@@ -21,10 +21,7 @@
                 <div class="mb-3">
                     <input type="password" class="form-control" name="pass" placeholder="Contraseña" required>
                 </div>
-                <div class="mb-3">
-                    <input type="password" class="form-control" name="pass2" placeholder="Confirma Contraseña" required>
-                </div>
-            
+               
                 <input type="submit" class="btn btn-primary" name="bAceptar"></input>
                 <p class="mt-3 text-center">¿No tienes una cuenta? <a href="index.php?ctl=registro" onclick="toggleForm();">Registrate</a></p>
             </form>

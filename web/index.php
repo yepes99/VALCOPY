@@ -30,7 +30,9 @@ $map = array(
     
     'inicio' => array('controller' => 'Controller', 'action' => 'inicio', 'nivel' => 0),
     'registro' => array('controller' => 'Controller', 'action' => 'registro', 'nivel' => 0),
-    'inicioSesion' => array('controller' => 'Controller', 'action' => 'inicioSesion', 'nivel' => 0)
+    'inicioSesion' => array('controller' => 'Controller', 'action' => 'inicioSesion', 'nivel' => 0),
+    'admin' => array('controller' => 'Controller', 'action' => 'admin', 'nivel' => 0),
+
     
     
 );
