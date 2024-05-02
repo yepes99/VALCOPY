@@ -5,7 +5,16 @@
         <div class="col-md-6">
             <form action="index.php?ctl=inicioSesion" method="post">
                 <h2 class="text-center mb-4">Inicia Sesion</h2>
-               
+                <!-- Aquí el mensaje de error -->
+            <?php
+            if (isset($params['mensaje']) && !empty($params['mensaje'])) {
+                echo '<div class="alert alert-danger" role="alert">';
+                foreach ($params['mensaje'] as $mensaje) {
+                    echo $mensaje . '<br>';
+                }
+                echo '</div>';
+            }
+            ?>
                 <div class="mb-3">
                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                 </div>

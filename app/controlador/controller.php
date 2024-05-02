@@ -99,53 +99,60 @@ class Controller
    {
        require __DIR__ . '/../../web/templates/inicio.php';
    }
-   public function inicioSesion()
-   {
-       $params = array(
-           'email' => '', // Correo electrónico del usuario
-           'pass' => '', // Contraseña del usuario
-           'pass2' => '', // Confirmación de contraseña del usuario
-           'mensaje' => array() // Mensajes de error o éxito durante el proceso
-       );
-   
-       if (isset($_POST["bAceptar"])) {
-           // Recogemos datos del formulario
-           $params["email"] = recoge("email");
-           $params["pass"] = recoge("pass");
-   
-           // Verificamos si se han ingresado los datos correctamente
-           if (empty($params["email"]) || empty($params["pass"])) {
-               $params["mensaje"][] = "Por favor, ingrese el correo electrónico y la contraseña.";
-           } else {
-               // Consultamos la base de datos para verificar el correo electrónico y la contraseña
-               $consulta = new Consultas();
-               $usuario = $consulta->buscarUsuarioPorEmail($params["email"]);
-   
-               if ($usuario) {
-                   // Verificamos la contraseña
-                   if (password_verify($params["pass"], $usuario["password"])) {
-                       // La contraseña es correcta, iniciamos sesión y redirigimos
-                       session_start();
-                       $_SESSION['email'] = $usuario['email'];
-                       $_SESSION['nombre'] = $usuario['nombre'];
-                       $_SESSION['apellidos'] = $usuario['apellidos'];
-   
-                       // Redirigimos a la página de inicio con un mensaje de éxito
-                       header("Location: index.php?ctl=inicio&mensaje=¡Bienvenido, has iniciado sesión correctamente!");
-                       exit;
-                   } else {
-                       $params["mensaje"][] = "La contraseña ingresada es incorrecta.";
-                   }
-               } else {
-                   $params["mensaje"][] = "El correo electrónico ingresado no está registrado.";
-               }
-           }
-       }
-   
-       // Incluimos la vista para mostrar el formulario de inicio de sesión
-       require __DIR__ . '/../../web/templates/inicioSesion.php';
-   }
-   
+// En la función inicioSesion del controlador Controller
+public function inicioSesion()
+{
+    $params = array(
+        'email' => '', // Correo electrónico del usuario
+        'pass' => '', // Contraseña del usuario
+        'pass2' => '', // Confirmación de contraseña del usuario
+        'mensaje' => array() // Mensajes de error o éxito durante el proceso
+    );
+
+    if (isset($_POST["bAceptar"])) {
+        // Recogemos datos del formulario
+        $params["email"] = recoge("email");
+        $params["pass"] = recoge("pass");
+
+        // Verificamos si se han ingresado los datos correctamente
+        if (empty($params["email"]) || empty($params["pass"])) {
+            $params["mensaje"][] = "Por favor, ingrese el correo electrónico y la contraseña.";
+        } else {
+            // Consultamos la base de datos para verificar el correo electrónico y la contraseña
+            $consulta = new Consultas();
+            $usuario = $consulta->buscarUsuarioPorEmail($params["email"]);
+
+            if ($usuario) {
+                // Verificamos la contraseña
+                if (password_verify($params["pass"], $usuario["password"])) {
+                    // La contraseña es correcta, iniciamos sesión y redirigimos
+                    session_start();
+                    $_SESSION['email'] = $usuario['email'];
+                    $_SESSION['nombre'] = $usuario['nombre'];
+                    $_SESSION['apellidos'] = $usuario['apellidos'];
+
+                    // Verificar si el usuario es administrador
+                    if ($usuario['tipo_usuario'] === 'administrador') {
+                        // Agregar la opción "Panel de Administrador" al navbar
+                        echo '<li class="nav-item"><a class="nav-link" href="panel_admin.php">Panel de Administrador</a></li>';
+                    }
+
+                    // Redirigimos a la página de inicio con un mensaje de éxito
+                    header("Location: index.php?ctl=inicio");
+                    exit;
+                } else {
+                    $params["mensaje"][] = "La contraseña ingresada es incorrecta.";
+                }
+            } else {
+                $params["mensaje"][] = "El correo electrónico ingresado no está registrado.";
+            }
+        }
+    }
+
+    // Incluimos la vista para mostrar el formulario de inicio de sesión
+    require __DIR__ . '/../../web/templates/inicioSesion.php';
+}
+
 
 
 
