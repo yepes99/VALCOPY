@@ -128,6 +128,7 @@ class Controller
                     if ($params["pass"] === $usuario["password"]) {
                         // Si la contraseña es correcta, redirigimos según el tipo de usuario
                         if ($usuario['tipo_usuario'] === 'administrador') {
+                            $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
                             header("Location: index.php?ctl=admin");
                             exit;
                         } else {
