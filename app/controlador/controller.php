@@ -100,6 +100,15 @@ class Controller
         require __DIR__ . '/../../web/templates/panel_admin.php';
     }
 
+    public function gestionProductos(){
+
+
+            
+
+
+        require __DIR__ . '/../../web/templates/gestionProductos.php';
+    }
+
     public function inicioSesion()
 {
     $params = array(

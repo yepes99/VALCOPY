@@ -32,6 +32,7 @@ $map = array(
     'registro' => array('controller' => 'Controller', 'action' => 'registro', 'nivel' => 0),
     'inicioSesion' => array('controller' => 'Controller', 'action' => 'inicioSesion', 'nivel' => 0),
     'admin' => array('controller' => 'Controller', 'action' => 'admin', 'nivel' => 0),
+    'gestionProductos' => array('controller' => 'Controller', 'action' => 'gestionProductos', 'nivel' => 0),
 
     
     
