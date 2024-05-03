@@ -21,6 +21,7 @@ $map = array(
     'gestionProductos' => array('controller' => 'Controller', 'action' => 'gestionProductos', 'nivel' => 0),
     'agregarProducto' => array('controller' => 'Controller', 'action' => 'agregarProducto', 'nivel' => 0),
     'agregarCategoria' => array('controller' => 'Controller', 'action' => 'agregarCategoria', 'nivel' => 0),
+    'editarProducto' => array('controller' => 'Controller', 'action' => 'editarProducto', 'nivel' => 0),
 );
 
 // Parseo de la ruta

@@ -1,8 +1,13 @@
 <?php include('./templates/layout.php'); ?>
 
 <div class="container rounded bg-light p-5 mt-5">
-    <h1 class="mt-5">Formulario de Producto</h1>
-    <form id="productForm" action="index.php?ctl=agregarProducto" method="post">
+    <h1 class="mt-5">Editar Producto</h1>
+    <form id="productForm" action="index.php?ctl=editarProducto" method="post">
+
+        <div class="mb-3">
+            <label for="id_producto" class="form-label">ID del Producto</label>
+            <input type="text" class="form-control" id="id_producto" name="id_producto" required>
+        </div>
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" name="nombre" required>
@@ -47,6 +52,6 @@
             <label for="imagen" class="form-label">Imagen</label>
             <input type="file" class="form-control" id="imagen" name="imagen">
         </div>
-        <input type="submit" class="btn btn-primary btn-block" value="Enviar" name="bAceptar">
+        <input type="submit" class="btn btn-primary btn-block" value="Actualizar" name="bAceptar">
     </form>
 </div>

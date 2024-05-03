@@ -93,4 +93,27 @@ public function insertarProducto($nombre, $descripcion, $categoria, $precio, $di
             return []; // Devolver un array vacío en caso de error
         }
     }
+
+    public function actualizarProducto($id_producto, $nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen)
+    {
+        try {
+            // Preparar la consulta SQL para actualizar un producto existente
+            $stmt = $this->conexion->prepare("UPDATE productos SET nombre = ?, descripcion = ?, categoria = ?, precio = ?, disponibilidad = ?, medidas = ?, imagen = ? WHERE id_producto = ?");
+    
+            // Enlazar parámetros y ejecutar la consulta
+            $stmt->execute([$nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen, $id_producto]);
+    
+            // Verificar si se actualizó al menos una fila
+            if ($stmt->rowCount() > 0) {
+                return true; // Indicar que la actualización fue exitosa
+            } else {
+                return false; // Indicar que no se realizó ninguna actualización
+            }
+        } catch (PDOException $e) {
+            echo "Error al actualizar el producto: " . $e->getMessage();
+            return false; // Indicar que hubo un error en la actualización
+        }
+    }
+    
+
 }
