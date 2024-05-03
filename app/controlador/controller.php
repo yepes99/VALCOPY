@@ -224,6 +224,18 @@ public function borrarProducto()
         require __DIR__ . '/../../web/templates/borrarProducto.php';
     }
 
+    public function verProductos()
+    {
+        // Crear una instancia de la clase Consultas
+        $consulta = new Consultas();
+
+        // Obtener todos los productos de la base de datos
+        $productos = $consulta->obtenerProductos();
+
+        // Incluir la vista para visualizar los productos
+        require __DIR__ . '/../../web/templates/verProductos.php';
+    }
+
     public function inicioSesion()
 {
     $params = array(

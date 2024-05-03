@@ -43,10 +43,10 @@
             </div>
         </div>
         <div class="service service3">
-            <i class="bi bi-eye-fill"></i>
-            <h4>Ver productos</h4>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat.</p>
+        <a href="index.php?ctl=verProductos">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <h4>Ver Producto</h4>
 
+        </a>
         </div>
     </section>

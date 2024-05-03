@@ -130,6 +130,21 @@ public function insertarProducto($nombre, $descripcion, $categoria, $precio, $di
         return false; // Indicar que hubo un error en el borrado
     }
 }
+public function obtenerProductos()
+{
+    try {
+        // Preparar la consulta SQL para obtener todos los productos
+        $stmt = $this->conexion->prepare("SELECT * FROM productos");
 
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener y devolver todos los productos como un array asociativo
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener productos: " . $e->getMessage();
+        return false; // Indicar que hubo un error en la consulta
+    }
+}
 
 }

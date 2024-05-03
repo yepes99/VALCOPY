@@ -23,6 +23,7 @@ $map = array(
     'agregarCategoria' => array('controller' => 'Controller', 'action' => 'agregarCategoria', 'nivel' => 0),
     'editarProducto' => array('controller' => 'Controller', 'action' => 'editarProducto', 'nivel' => 0),
     'borrarProducto' => array('controller' => 'Controller', 'action' =>'borrarProducto', 'nivel' => 0),
+    'verProductos' => array('controller' => 'Controller', 'action' =>'verProductos', 'nivel' => 0),
     
 );
 
