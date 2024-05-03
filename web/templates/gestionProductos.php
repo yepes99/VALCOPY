@@ -21,6 +21,16 @@
                   <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 
               </div>
+              <div class="service service2">
+              <a href="index.php?ctl=agregarCategoria">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <h4>Agregar Categoria</h4>
+            
+                </a>
+               
+
+              </div>
+                </a>
       
               <div class="service service3">
                   <i class="bi bi-trash-fill"></i>

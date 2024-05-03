@@ -19,7 +19,8 @@ $map = array(
     'inicioSesion' => array('controller' => 'Controller', 'action' => 'inicioSesion', 'nivel' => 0),
     'admin' => array('controller' => 'Controller', 'action' => 'admin', 'nivel' => 0),
     'gestionProductos' => array('controller' => 'Controller', 'action' => 'gestionProductos', 'nivel' => 0),
-    'agregarProducto' => array('controller' => 'Controller', 'action' => 'agregarProducto', 'nivel' => 0)
+    'agregarProducto' => array('controller' => 'Controller', 'action' => 'agregarProducto', 'nivel' => 0),
+    'agregarCategoria' => array('controller' => 'Controller', 'action' => 'agregarCategoria', 'nivel' => 0),
 );
 
 // Parseo de la ruta

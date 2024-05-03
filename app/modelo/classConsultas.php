@@ -60,4 +60,19 @@ public function insertarProducto($nombre, $descripcion, $categoria, $precio, $di
         }
     }
 
+    public function insertarCategoria($nombre)
+    {
+        try {
+            // Preparar la consulta SQL para insertar una nueva categoría
+            $stmt = $this->conexion->prepare("INSERT INTO categorias (nombre) VALUES (?)");
+
+            // Enlazar parámetros y ejecutar la consulta
+            $stmt->execute([$nombre]);
+
+            return true; // Indicar que la inserción fue exitosa
+        } catch (PDOException $e) {
+            echo "Error al insertar categoría: " . $e->getMessage();
+            return false; // Indicar que hubo un error en la inserción
+        }
+    }
 }
