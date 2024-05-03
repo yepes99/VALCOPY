@@ -108,7 +108,37 @@ class Controller
 
         require __DIR__ . '/../../web/templates/gestionProductos.php';
     }
+    public function agregarProducto()
+{
+    // Verificar si se envió el formulario
+    if (isset($_POST["bAceptar"])) {
+        // Recoger los datos del formulario
+        $nombre = $_POST["nombre"];
+        $descripcion = $_POST["descripcion"];
+        $categoria = $_POST["categoria"];
+        $precio = $_POST["precio"];
+        $disponibilidad = $_POST["disponibilidad"];
+        $medidas = $_POST["medidas"];
+        $imagen = $_POST["imagen"]; // Aquí deberías manejar la subida de archivos
+        
+        // Crear una instancia de Consultas
+        $consulta = new Consultas();
 
+        // Insertar el producto en la base de datos
+        $exito = $consulta->insertarProducto($nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen);
+
+        // Verificar si la inserción fue exitosa
+        if ($exito) {
+            echo "Producto agregado exitosamente.";
+            // Aquí podrías redirigir a otra página o realizar otra acción después de agregar el producto
+        } else {
+            echo "Error al agregar el producto.";
+        }
+    }
+
+    // Incluir la vista del formulario para agregar un producto
+    require __DIR__ . '/../../web/templates/agregarProducto.php';
+}
     public function inicioSesion()
 {
     $params = array(

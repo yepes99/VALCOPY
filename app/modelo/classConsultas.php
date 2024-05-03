@@ -44,4 +44,20 @@ public function insertarUsuario($params)
     }
 }
 
+public function insertarProducto($nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen)
+    {
+        try {
+            // Preparar la consulta SQL para insertar un nuevo producto
+            $stmt = $this->conexion->prepare("INSERT INTO productos (nombre, descripcion, categoria, precio, disponibilidad, medidas, imagen) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+            // Enlazar parámetros y ejecutar la consulta
+            $stmt->execute([$nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen]);
+
+            return true; // Indicar que la inserción fue exitosa
+        } catch (PDOException $e) {
+            echo "Error al insertar producto: " . $e->getMessage();
+            return false; // Indicar que hubo un error en la inserción
+        }
+    }
+
 }

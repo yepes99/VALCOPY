@@ -2,7 +2,7 @@
     <div class="container  rounded bg-light p-5 mt-5">
         <h1 class="mt-5">Formulario de Producto</h1>
         <form id="productForm">
-            <div class="mb-3">
+            <div class="mb-3"action="index.php?ctl=agregarProducto" method="post">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
