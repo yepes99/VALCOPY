@@ -236,6 +236,11 @@ public function borrarProducto()
         require __DIR__ . '/../../web/templates/verProductos.php';
     }
 
+    public function panelAdmin(){
+
+        require __DIR__ . '/../../web/templates/panel_admin.php';
+    }
+
     public function inicioSesion()
 {
     $params = array(
@@ -265,6 +270,7 @@ public function borrarProducto()
                         // Si la contraseña es correcta, redirigimos según el tipo de usuario
                         if ($usuario['tipo_usuario'] === 'administrador') {
                             $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
+                            $_SESSION['id_usuario'] = $usuario['id_usuario'];
                             header("Location: index.php?ctl=admin");
                             exit;
                         } else {
@@ -298,6 +304,64 @@ public function borrarProducto()
     // Incluimos la vista para mostrar el formulario de inicio de sesión
     require __DIR__ . '/../../web/templates/inicioSesion.php';
 }
+
+public function cerrarSesion()
+{
+    // Eliminar todas las variables de sesión
+    session_unset();
+
+    // Destruir la sesión
+    session_destroy();
+
+    // Redirigir al inicio del sitio web
+    header("Location: index.php?ctl=inicio");
+    exit;
+}
+
+public function verPerfil()
+{
+    // Verificar si hay una sesión iniciada
+    session_start();
+
+    // Verificar si el usuario está autenticado
+    if (isset($_SESSION['id_usuario'])) {
+        // Obtener el ID del usuario de la sesión
+        $id_usuario = $_SESSION['id_usuario'];
+
+        // Crear una instancia de Consultas
+        $consulta = new Consultas();
+
+        // Obtener los datos del usuario desde la base de datos
+        $usuario = $consulta->obtenerUsuarioPorId($id_usuario);
+
+        // Verificar si se encontró el usuario
+        if ($usuario) {
+            // Asignar los datos del usuario a variables
+            $user = $usuario['user'];
+            $nombre = $usuario['nombre'];
+            $apellidos = $usuario['apellidos'];
+            $organizacion = $usuario['organizacion'];
+            $ciudad = $usuario['ciudad'];
+            $pais = $usuario['pais'];
+            $email = $usuario['email'];
+            $telefono = $usuario['telefono'];
+            $fecha_nacimiento = $usuario['fecha_nacimiento'];
+            
+            // Incluir la vista para mostrar el perfil del usuario
+            include __DIR__ . '/../../web/templates/verPerfil.php';
+        } else {
+            // En caso de que no se encuentre el usuario, redirigir a una página de error o manejar de otra manera
+            echo "Usuario no encontrado.";
+            
+        }
+    } else {
+        // Si el usuario no está autenticado, redirigir a la página de inicio de sesión o manejar de otra manera
+        echo "Usuario no autenticado.";
+        header("Location: index.php?ctl=inicio");
+        exit;
+    }
+}
+
 
 }
     

@@ -1,8 +1,9 @@
 <?php include('./templates/layout.php'); ?>
 <div class="container mt-5">
-        <h1 class="mb-4">Lista de Productos</h1>
-        <table class="table">
-            <thead>
+    <h1 class="mb-4">Lista de Productos</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Nombre</th>
@@ -15,21 +16,22 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí se deben iterar los productos y mostrarlos en la tabla -->
-                <?php
-                // Reemplaza esto con tu lógica para obtener y mostrar los productos
-                foreach ($productos as $producto) {
-                    echo "<tr>";
-                    echo "<td>{$producto['id_producto']}</td>";
-                    echo "<td>{$producto['nombre']}</td>";
-                    echo "<td>{$producto['descripcion']}</td>";
-                    echo "<td>{$producto['categoria']}</td>";
-                    echo "<td>{$producto['precio']}</td>";
-                    echo "<td>{$producto['disponibilidad']}</td>";
-                    echo "<td>{$producto['medidas']}</td>";
-                    echo "<td>{$producto['imagen']}</td>";
-                    echo "</tr>";
-                }
-                ?>
+                <!-- Iteración de productos -->
+                <?php foreach ($productos as $producto): ?>
+                    <tr>
+                        <td><?= $producto['id_producto'] ?></td>
+                        <td><?= $producto['nombre'] ?></td>
+                        <td><?= $producto['descripcion'] ?></td>
+                        <td><?= $producto['categoria'] ?></td>
+                        <td><?= $producto['precio'] ?></td>
+                        <td><?= $producto['disponibilidad'] ?></td>
+                        <td><?= $producto['medidas'] ?></td>
+                        <td>
+                            <img src="<?= $producto['imagen'] ?>" alt="Imagen de producto" style="max-width: 100px; max-height: 100px;">
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
+</div>

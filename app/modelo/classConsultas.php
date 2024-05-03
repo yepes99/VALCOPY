@@ -147,4 +147,22 @@ public function obtenerProductos()
     }
 }
 
+public function obtenerUsuarioPorId($id_usuario)
+{
+    try {
+        // Preparar la consulta SQL para obtener el usuario por su ID
+        $stmt = $this->conexion->prepare("SELECT * FROM usuarios WHERE id_usuario = ?");
+
+        // Enlazar parámetro y ejecutar la consulta
+        $stmt->execute([$id_usuario]);
+
+        // Obtener y devolver el usuario como un array asociativo
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener usuario por ID: " . $e->getMessage();
+        return false; // Indicar que hubo un error en la consulta
+    }
+}
+
+
 }

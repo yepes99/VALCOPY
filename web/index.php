@@ -15,6 +15,7 @@ if (!isset($_SESSION['nivel'])) {
 // Configuración de las rutas y permisos de acceso
 $map = array(
     'inicio' => array('controller' => 'Controller', 'action' => 'inicio', 'nivel' => 0),
+    'panelAdmin' => array('controller' => 'Controller', 'action' => 'panelAdmin', 'nivel' => 0),
     'registro' => array('controller' => 'Controller', 'action' => 'registro', 'nivel' => 0),
     'inicioSesion' => array('controller' => 'Controller', 'action' => 'inicioSesion', 'nivel' => 0),
     'admin' => array('controller' => 'Controller', 'action' => 'admin', 'nivel' => 0),
@@ -24,6 +25,9 @@ $map = array(
     'editarProducto' => array('controller' => 'Controller', 'action' => 'editarProducto', 'nivel' => 0),
     'borrarProducto' => array('controller' => 'Controller', 'action' =>'borrarProducto', 'nivel' => 0),
     'verProductos' => array('controller' => 'Controller', 'action' =>'verProductos', 'nivel' => 0),
+    'cerrarSesion' => array('controller' => 'Controller', 'action' =>'cerrarSesion', 'nivel' => 0),
+    'verPerfil' => array('controller' => 'Controller', 'action' =>'verPerfil', 'nivel' => 0),
+
     
 );
 
