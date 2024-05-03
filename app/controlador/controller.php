@@ -198,6 +198,32 @@ public function editarProducto()
     require __DIR__ . '/../../web/templates/editarProducto.php';
 }
 
+
+public function borrarProducto()
+    {
+        // Verificar si se envió el formulario para borrar el producto
+        if (isset($_POST["bBorrar"])) {
+            // Recoger el ID del producto a borrar
+            $id_producto = $_POST["id_producto"];
+
+            // Crear una instancia de Consultas
+            $consulta = new Consultas();
+
+            // Intentar borrar el producto
+            $exito = $consulta->borrarProducto($id_producto);
+
+            // Verificar si el borrado fue exitoso
+            if ($exito) {
+                echo "Producto borrado exitosamente.";
+            } else {
+                echo "Error al borrar el producto.";
+            }
+        }
+
+        // Incluir la vista del formulario para borrar un producto
+        require __DIR__ . '/../../web/templates/borrarProducto.php';
+    }
+
     public function inicioSesion()
 {
     $params = array(

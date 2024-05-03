@@ -32,11 +32,13 @@
             </div>
             </a>
 
-            <div class="service service3">
-                <i class="bi bi-trash-fill"></i>
-                <h4>Eliminar producto</h4>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.</p>
+            <div class="service service2">
+                <a href="index.php?ctl=borrarProducto">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <h4>Borrar Producto</h4>
+
+                </a>
+
 
             </div>
         </div>

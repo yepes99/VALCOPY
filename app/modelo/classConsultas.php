@@ -115,5 +115,21 @@ public function insertarProducto($nombre, $descripcion, $categoria, $precio, $di
         }
     }
     
+    public function borrarProducto($id_producto)
+{
+    try {
+        // Preparar la consulta SQL para borrar el producto
+        $stmt = $this->conexion->prepare("DELETE FROM productos WHERE id_producto = ?");
+
+        // Enlazar parámetros y ejecutar la consulta
+        $stmt->execute([$id_producto]);
+
+        return true; // Indicar que el borrado fue exitoso
+    } catch (PDOException $e) {
+        echo "Error al borrar el producto: " . $e->getMessage();
+        return false; // Indicar que hubo un error en el borrado
+    }
+}
+
 
 }
