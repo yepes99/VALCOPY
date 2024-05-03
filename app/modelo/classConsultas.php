@@ -75,4 +75,22 @@ public function insertarProducto($nombre, $descripcion, $categoria, $precio, $di
             return false; // Indicar que hubo un error en la inserción
         }
     }
+
+    public function obtenerCategorias()
+    {
+        try {
+            // Preparar la consulta SQL para obtener todas las categorías
+            $stmt = $this->conexion->prepare("SELECT id_categoria, nombre FROM categorias");
+
+            // Ejecutar la consulta
+            $stmt->execute();
+
+            // Obtener y devolver todas las filas de resultado como un array asociativo
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Manejar cualquier error en la consulta
+            echo "Error al obtener categorías: " . $e->getMessage();
+            return []; // Devolver un array vacío en caso de error
+        }
+    }
 }
