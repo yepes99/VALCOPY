@@ -22,7 +22,7 @@
 			  </div>
 			</div>
 			<div class="col-md-6 mt-5">
-			  <img src="../../app/archivos/img/productos/1000_F_247009476_bWnpHdluSWd9j2fOHW0vxZk2teSmcFn4.jpg" alt="img" class="img-fluid">
+			  <img src="../app/archivos/img/productos/1000_F_247009476_bWnpHdluSWd9j2fOHW0vxZk2teSmcFn4.jpg" alt="img" class="img-fluid">
 			</div>
 		  </div>
 		</div>
@@ -42,7 +42,7 @@
 							<div class="col-6 col-md-6">
 								<div class="feature">
 									<div class="icon">
-										<img src="../../app/archivos/img/productos/truck.svg" alt="Image" class="imf-fluid">
+										<img src="../app/archivos/img/productos/truck.svg" alt="Image" class="imf-fluid">
 									</div>
 									<h3>Fast &amp; Free Shipping</h3>
 									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
@@ -52,7 +52,7 @@
 							<div class="col-6 col-md-6">
 								<div class="feature">
 									<div class="icon">
-										<img src="../img/truck.svg" alt="Image" class="imf-fluid">									</div>
+										<img src="../app/archivos/img/productos/truck.svg" alt="Image" class="imf-fluid">									</div>
 									<h3>Easy to Shop</h3>
 									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
@@ -61,7 +61,7 @@
 							<div class="col-6 col-md-6">
 								<div class="feature">
 									<div class="icon">
-										<img src="../img/truck.svg" alt="Image" class="imf-fluid">									</div>
+										<img src="../app/archivos/img/productos/truck.svg" alt="Image" class="imf-fluid">									</div>
 									<h3>24/7 Support</h3>
 									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
@@ -70,7 +70,7 @@
 							<div class="col-6 col-md-6">
 								<div class="feature">
 									<div class="icon">
-										<img src="../img/truck.svg" alt="Image" class="imf-fluid">									</div>
+										<img src="../app/archivos/img/productos/truck.svg" alt="Image" class="imf-fluid">									</div>
 									<h3>Hassle Free Returns</h3>
 									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
@@ -81,7 +81,7 @@
 
 					<div class="col-lg-5">
 						<div class="img-wrap">
-							<img src="../../app/archivos/img/productos/1000_F_247009476_bWnpHdluSWd9j2fOHW0vxZk2teSmcFn4.jpg" alt="Image" class="img-fluid">
+							<img src="../app/archivos/img/productos/1000_F_247009476_bWnpHdluSWd9j2fOHW0vxZk2teSmcFn4.jpg" alt="Image" class="img-fluid">
 						</div>
 					</div>
 
@@ -98,7 +98,7 @@
 		<h2 class="section-title">Sobre Nosotros</h2>
 		<br>
 	  <div class="row justify-content-around gy-4">
-		<div class="col-lg-6 img-bg" style="background-image: url('../../app/archivos/img/productos/1000_F_247009476_bWnpHdluSWd9j2fOHW0vxZk2teSmcFn4.jpg');"></div>
+		<div class="col-lg-6 img-bg" style="background-image: url('../app/archivos/img/productos/1000_F_247009476_bWnpHdluSWd9j2fOHW0vxZk2teSmcFn4.jpg');"></div>
 
 		<div class="col-lg-5 d-flex flex-column justify-content-center">
 		  <h3>Enim quis est voluptatibus aliquid consequatur fugiat</h3>
