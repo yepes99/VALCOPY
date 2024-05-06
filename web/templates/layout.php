@@ -22,8 +22,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
 
 
     <link rel="stylesheet" href="../web/styles/styles.css" />
-    <link rel="stylesheet" href="../web/styles/login.css" />
-    <link rel="stylesheet" href="../web/styles/dashboard.css" />
+    
 
 
 </head>
