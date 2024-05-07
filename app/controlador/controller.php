@@ -415,7 +415,11 @@ public function visualizarProductos(){
 
  
 public function producto(){
-    
+    // Crear una instancia de la clase Consultas
+    $consultas = new Consultas();
+
+    // Obtener los productos de la categoría 1
+    $productos_categoria1 = $consultas->obtenerProductosPorCategoria(1);
     include __DIR__ . '/../../web/templates/producto.php';
 }
 

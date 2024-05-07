@@ -25,6 +25,12 @@ $productos_categoria3 = $consultas->obtenerProductosPorCategoria(3);
             productoCategoria.style.display = 'block';
         });
     }
+
+    // Función para manejar el clic en el botón "Ver más"
+    function verMas(idProducto) {
+        // Simplemente redirige a la página de detalle del producto pasando el ID del producto como parámetro
+        window.location.href = 'index.php?ctl=producto&id_producto=' + idProducto;
+    }
 </script>
 
 <section>
@@ -55,7 +61,7 @@ $productos_categoria3 = $consultas->obtenerProductosPorCategoria(3);
                                     <h5 class="mb-0"><?php echo $producto['nombre']; ?></h5>
                                     <h5 class="text-dark mb-0">$<?php echo $producto['precio']; ?></h5>
                                     <div class="d-flex justify-content-between ">
-                                        <button class="btn btn-primary btn-sm m-2"><i class="fas fa-eye"></i> View Details</button>
+                                        <button class="btn btn-primary btn-sm m-2" onclick="verMas(<?php echo $producto['id_producto']; ?>)"><i class="fas fa-eye"></i> View Details</button>
                                         <button class="btn btn-success btn-sm m-2"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                     </div>
                                 </div>
@@ -77,7 +83,7 @@ $productos_categoria3 = $consultas->obtenerProductosPorCategoria(3);
                                     <h5 class="mb-0"><?php echo $producto['nombre']; ?></h5>
                                     <h5 class="text-dark mb-0">$<?php echo $producto['precio']; ?></h5>
                                     <div class="d-flex justify-content-between ">
-                                            <button class="btn btn-link"><a href="index.php?ctl=producto"></a>Ver más</button>
+                                        <button class="btn btn-primary btn-sm m-2" onclick="verMas(<?php echo $producto['id_producto']; ?>)"><i class="fas fa-eye"></i> View Details</button>
                                         <button class="btn btn-success btn-sm m-2"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                     </div>
                                 </div>
@@ -99,8 +105,7 @@ $productos_categoria3 = $consultas->obtenerProductosPorCategoria(3);
                                     <h5 class="mb-0"><?php echo $producto['nombre']; ?></h5>
                                     <h5 class="text-dark mb-0">$<?php echo $producto['precio']; ?></h5>
                                     <div class="d-flex justify-content-between ">
-                                    <a href="index.php?ctl=producto">Ver más</a>
-
+                                        <button class="btn btn-primary btn-sm m-2" onclick="verMas(<?php echo $producto['id_producto']; ?>)"><i class="fas fa-eye"></i> View Details</button>
                                         <button class="btn btn-success btn-sm m-2"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                     </div>
                                 </div>
