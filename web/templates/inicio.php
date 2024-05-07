@@ -397,6 +397,6 @@
 		</div>
 	</div>
 </footer>
-		<!-- End Hero Section -->
 	
-		<!-- End Hero Section -->
+	
+	

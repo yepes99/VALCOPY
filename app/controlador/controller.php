@@ -362,6 +362,15 @@ public function verPerfil()
     }
 }
 
+public function visualizarProductos(){
+    
+    include __DIR__ . '/../../web/templates/producto_cliente.php';
+}
+
+ public function error() {
+        // Error handling logic here
+        echo "404 - Contorlador not found";
+    }
 
 }
     

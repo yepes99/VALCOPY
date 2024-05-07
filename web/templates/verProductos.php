@@ -1,4 +1,5 @@
 <?php include('./templates/layout.php'); ?>
+
 <div class="container mt-5">
     <h1 class="mb-4">Lista de Productos</h1>
     <div class="table-responsive">

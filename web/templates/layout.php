@@ -22,8 +22,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
 
 
     <link rel="stylesheet" href="../web/styles/styles.css" />
-    <link rel="stylesheet" href="../web/styles/login.css" />
-    <link rel="stylesheet" href="../web/styles/dashboard.css" />
+   
 
 
 </head>
@@ -32,57 +31,33 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
 
     <?php if ($isAdmin) : ?>
         <!-- Navbar para administradores -->
-        <aside class="sidebar position-fixed top-0 left-0 overflow-auto h-100 float-left" id="show-side-navigation1">
-            <i class="uil-bars close-aside d-md-none d-lg-none" data-close="show-side-navigation1"></i>
-            <div class="sidebar-header d-flex justify-content-center align-items-center px-3 py-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-square icon" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
-                </svg>
-                <div class="ms-2">
-                    <h5 class="fs-6 mb-0">
-                        <a class="text-decoration-none" href="#">Jane Doe</a>
-                    </h5>
-
-                </div>
-            </div>
-
-
-
-            <ul class="list-unstyled">
-                <li>
-                    <a href="index.php?ctl=panelAdmin">Inicio</a>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-square icon" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                    </svg>
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?ctl=panelAdmin">Inicio</a>
                 </li>
-                <li>
-                    <a href="index.php?ctl=gestionProductos">Gestión de Productos</a>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-square icon" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                    </svg>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?ctl=gestionProductos">Gestión de Productos</a>
                 </li>
-                <li>
-                    <a href="gestionPedidos.html">Gestion de Pedidos</a>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-square icon" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                    </svg>
+                <li class="nav-item">
+                    <a class="nav-link" href="gestionPedidos.html">Gestión de Pedidos</a>
                 </li>
-                <li>
-                    <a href="index.php?ctl=inicio">Volver Web</a>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-square icon" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                    </svg>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?ctl=inicio">Volver Web</a>
                 </li>
-                <li>
-                    <a href="index.php?ctl=cerrarSesion">Cerrar Sesión</a>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-square icon" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                    </svg>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?ctl=cerrarSesion">Cerrar Sesión</a>
                 </li>
             </ul>
+        </div>
+    </div>
+</nav>
 
-        </aside>
     <?php else : ?>
         <!-- Navbar para usuarios no administradores -->
         <nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
@@ -98,11 +73,11 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                         <li class="nav-item active">
                             <a class="nav-link" href="index.php?ctl=inicio">Home</a>
                         </li>
-                        <li><a class="nav-link" href="shop.html">Shop</a></li>
-                        <li><a class="nav-link" href="about.html">About us</a></li>
-                        <li><a class="nav-link" href="services.html">Services</a></li>
-                        <li><a class="nav-link" href="blog.html">Blog</a></li>
-                        <li><a class="nav-link" href="contact.html">Contact us</a></li>
+                        <li><a class="nav-link" href="index.php?ctl=visualizarProductos">Productos</a></li>
+                        <li><a class="nav-link" href="about.html">Sobre Nosotros</a></li>
+                        <li><a class="nav-link" href="services.html">Servicios</a></li>
+                        <li><a class="nav-link" href="blog.html">Contáctanos</a></li>
+                    
                     </ul>
 
                     <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
@@ -115,6 +90,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="index.php?ctl=registro">Registro</a></li>
+                   
                         <li><a class="dropdown-item" href="index.php?ctl=verPerfil">Ajustes</a></li>
                     </ul>
                 </li>

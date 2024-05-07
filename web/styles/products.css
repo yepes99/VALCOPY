@@ -1,0 +1,72 @@
+/*PRODUCTOS*/
+.card-product {
+    border: 0;
+    margin-bottom: 30px
+  }
+  
+  .card-product p {
+    margin-bottom: 0
+  }
+  
+  .card-product__img {
+    position: relative
+  }
+  
+  .card-product__imgOverlay {
+    background: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 5px;
+    transform: translateY(30px);
+    opacity: 0;
+    z-index: -1;
+    transition: all .48s ease
+  }
+  
+  .card-product__imgOverlay li {
+    display: inline-block
+  }
+  
+  .card-product__imgOverlay li button {
+    border: 0;
+    border-radius: 0;
+    padding: 7px 12px;
+    background: #8894ff
+  }
+  
+  .card-product__imgOverlay li button i,
+  .card-product__imgOverlay li button span {
+    font-size: 15px;
+    color: #fff;
+    vertical-align: middle
+  }
+  
+  .card-product__imgOverlay li button:hover {
+    background: #384aeb
+  }
+  
+  .card-product__imgOverlay li:not(:last-child) {
+    margin-right: 5px
+  }
+  
+  .card-product__title a {
+    color: #222
+  }
+  
+  .card-product__price {
+    font-size: 18px;
+    font-weight: 500
+  }
+  
+  .card-product:hover .card-product__imgOverlay {
+    opacity: 1;
+    z-index: 1;
+    transform: translateY(0)
+  }
+  
+  .card-product:hover .card-product__title a {
+    color: #384aeb
+  }
+  

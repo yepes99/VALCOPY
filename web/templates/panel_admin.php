@@ -64,70 +64,20 @@
         </div>
        
       </section>
-      <aside class="messages-sidebar position-fixed top-0 end-0 bg-light p-3">
-        <h2 class="mb-4">Mensajes de Clientes</h2>
-        <!-- Mensaje 1 -->
-        <div class="message-content mb-4 border-bottom pb-4">
-          <div class="message-header mb-2">
-            <div class="name fw-bold">Cliente 1</div>
-          </div>
-          <p class="message-line mb-2">
-            I am really impressed! Can't wait to see the final result.
-          </p>
-          <p class="message-line time mb-0">
-            Dec, 11
-          </p>
-          <!-- Formulario de respuesta -->
-          <form class="reply-form mt-3">
-            <div class="mb-3">
-              <label for="reply-message" class="form-label">Responder:</label>
-              <textarea class="form-control" id="reply-message" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar respuesta</button>
-          </form>
-        </div>
-      
-        <!-- Mensaje 2 -->
-        <div class="message-content mb-4 border-bottom pb-4">
-          <div class="message-header mb-2">
-            <div class="name fw-bold">Cliente 2</div>
-          </div>
-          <p class="message-line mb-2">
-            This looks amazing! Great job!
-          </p>
-          <p class="message-line time mb-0">
-            Dec, 12
-          </p>
-          <!-- Formulario de respuesta -->
-          <form class="reply-form mt-3">
-            <div class="mb-3">
-              <label for="reply-message" class="form-label">Responder:</label>
-              <textarea class="form-control" id="reply-message" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar respuesta</button>
-          </form>
-        </div>
-      
-        <!-- Mensaje 3 -->
-        <div class="message-content mb-4 border-bottom pb-4">
-          <div class="message-header mb-2">
-            <div class="name fw-bold">Cliente 3</div>
-          </div>
-          <p class="message-line mb-2">
-            I have a question regarding my order. Can you please help me?
-          </p>
-          <p class="message-line time mb-0">
-            Dec, 13
-          </p>
-          <!-- Formulario de respuesta -->
-          <form class="reply-form mt-3">
-            <div class="mb-3">
-              <label for="reply-message" class="form-label">Responder:</label>
-              <textarea class="form-control" id="reply-message" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar respuesta</button>
-          </form>
-        </div>
-      </aside>
-      
-    
+      <div class="container mt-5">
+    <h2 class="mb-4">Mensajes de Clientes</h2>
+    <!-- Mensaje 1 -->
+    <div class="message-content mb-4 border-bottom pb-4">
+        <!-- Contenido del mensaje -->
+    </div>
+
+    <!-- Mensaje 2 -->
+    <div class="message-content mb-4 border-bottom pb-4">
+        <!-- Contenido del mensaje -->
+    </div>
+
+    <!-- Mensaje 3 -->
+    <div class="message-content mb-4 border-bottom pb-4">
+        <!-- Contenido del mensaje -->
+    </div>
+</div>
