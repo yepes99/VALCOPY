@@ -413,10 +413,18 @@ public function visualizarProductos(){
     include __DIR__ . '/../../web/templates/producto_cliente.php';
 }
 
- public function error() {
+ 
+public function producto(){
+    
+    include __DIR__ . '/../../web/templates/producto.php';
+}
+
+public function error() {
         // Error handling logic here
         echo "404 - Contorlador not found";
     }
+
+
 
 }
     

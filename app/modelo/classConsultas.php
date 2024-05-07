@@ -185,5 +185,25 @@ public function obtenerUsuarioPorId($id_usuario)
     }
 }
 
+public function obtenerProductoPorId($id_producto)
+{
+    try {
+        // Preparar la consulta SQL para obtener un producto por su ID
+        $stmt = $this->conexion->prepare("SELECT * FROM productos WHERE id_producto = :id");
+
+        // Vincular el parámetro de ID del producto
+        $stmt->bindParam(":id", $id_producto, PDO::PARAM_INT);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener y devolver el producto como un array asociativo
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        // Manejar cualquier error de consulta
+        echo "Error al obtener el producto: " . $e->getMessage();
+        return false; // Indicar que hubo un error en la consulta
+    }
+}
 
 }

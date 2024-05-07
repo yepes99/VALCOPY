@@ -77,7 +77,7 @@ $productos_categoria3 = $consultas->obtenerProductosPorCategoria(3);
                                     <h5 class="mb-0"><?php echo $producto['nombre']; ?></h5>
                                     <h5 class="text-dark mb-0">$<?php echo $producto['precio']; ?></h5>
                                     <div class="d-flex justify-content-between ">
-                                        <button class="btn btn-primary btn-sm m-2"><i class="fas fa-eye"></i> View Details</button>
+                                            <button class="btn btn-link"><a href="index.php?ctl=producto"></a>Ver más</button>
                                         <button class="btn btn-success btn-sm m-2"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                     </div>
                                 </div>
@@ -99,7 +99,8 @@ $productos_categoria3 = $consultas->obtenerProductosPorCategoria(3);
                                     <h5 class="mb-0"><?php echo $producto['nombre']; ?></h5>
                                     <h5 class="text-dark mb-0">$<?php echo $producto['precio']; ?></h5>
                                     <div class="d-flex justify-content-between ">
-                                        <button class="btn btn-primary btn-sm m-2"><i class="fas fa-eye"></i> View Details</button>
+                                    <a href="index.php?ctl=producto">Ver más</a>
+
                                         <button class="btn btn-success btn-sm m-2"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                     </div>
                                 </div>

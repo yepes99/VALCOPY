@@ -41,6 +41,7 @@ $map = array(
     'verPerfil' => array('controller' => 'Controller', 'action' => 'verPerfil', 'nivel' => 0),
     'error' => array('controller' => 'Controller', 'action' => 'error', 'nivel' => 0),
     'visualizarProductos' => array('controller' => 'Controller', 'action' => 'visualizarProductos', 'nivel' => 0),
+    'producto' => array('controller' => 'Controller', 'action' => 'producto', 'nivel' => 0),
 );
 
 // Parseo de la ruta
