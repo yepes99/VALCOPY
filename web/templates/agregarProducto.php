@@ -1,8 +1,10 @@
 <?php include('./templates/layout.php'); ?>
 
 <div class="container rounded bg-light p-5 mt-5">
-    <h1 class="mt-5">Formulario de Producto</h1>
-    <form id="productForm" action="index.php?ctl=agregarProducto" method="post">
+    <h1 class="mt-5">Formulario de Producto</h1> 
+    <form id="productForm" action="index.php?ctl=agregarProducto" method="post" enctype="multipart/form-data">
+
+
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" name="nombre" required>

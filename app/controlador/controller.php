@@ -119,26 +119,68 @@ class Controller
             $precio = $_POST["precio"];
             $disponibilidad = $_POST["disponibilidad"];
             $medidas = $_POST["medidas"];
-            $imagen = $_POST["imagen"]; // Aquí deberías manejar la subida de archivos
+            $imagen = $_FILES["imagen"]; // Recoger la imagen del formulario
             
-            // Crear una instancia de Consultas
-            $consulta = new Consultas();
-
-            // Insertar el producto en la base de datos
-            $exito = $consulta->insertarProducto($nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen);
-
-            // Verificar si la inserción fue exitosa
-            if ($exito) {
-                echo "Producto agregado exitosamente.";
-               
+            // Directorio donde se almacenarán las imágenes de productos
+            $directorio_destino = __DIR__ . '/../../app/archivos/img/productos_imagenes/';
+            
+            // Comprobar si se subió la imagen correctamente
+            if ($imagen['error'] === UPLOAD_ERR_OK) {
+                // Obtener el nombre y la extensión del archivo
+                $nombre_imagen = basename($imagen["name"]);
+                $nombre_temporal = $imagen["tmp_name"];
+                $ruta_destino = $directorio_destino . $nombre_imagen;
+                
+                // Mover el archivo al directorio de destino
+                if (move_uploaded_file($nombre_temporal, $ruta_destino)) {
+                    // Crear una instancia de Consultas
+                    $consulta = new Consultas();
+    
+                    // Insertar el producto en la base de datos
+                    $exito = $consulta->insertarProducto($nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $ruta_destino);
+    
+                    // Verificar si la inserción fue exitosa
+                    if ($exito) {
+                        echo "Producto agregado exitosamente.";
+                    } else {
+                        echo "Error al agregar el producto.";
+                    }
+                } else {
+                    echo "Error al mover el archivo al directorio de destino.";
+                }
             } else {
-                echo "Error al agregar el producto.";
+                // Mostrar mensaje de error según el tipo de error
+                switch ($imagen['error']) {
+                    case UPLOAD_ERR_INI_SIZE:
+                    case UPLOAD_ERR_FORM_SIZE:
+                        echo "La foto es demasiado grande.";
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        echo "La foto no se subió completa.";
+                        break;
+                    case UPLOAD_ERR_NO_FILE:
+                        echo "No se subió ninguna foto.";
+                        break;
+                    case UPLOAD_ERR_NO_TMP_DIR:
+                        echo "Falta el directorio temporal.";
+                        break;
+                    case UPLOAD_ERR_CANT_WRITE:
+                        echo "Error al escribir el archivo en el disco.";
+                        break;
+                    case UPLOAD_ERR_EXTENSION:
+                        echo "La subida del archivo fue detenida por la extensión.";
+                        break;
+                    default:
+                        echo "Error desconocido al subir la foto.";
+                        break;
+                }
             }
         }
-
+    
         // Incluir la vista del formulario para agregar un producto
         require __DIR__ . '/../../web/templates/agregarProducto.php';
     }
+
 
     public function agregarCategoria()
 {
@@ -363,7 +405,11 @@ public function verPerfil()
 }
 
 public function visualizarProductos(){
-    
+    // Crear una instancia de la clase Consultas
+    $consultas = new Consultas();
+
+    // Obtener los productos de la base de datos
+    $productos = $consultas->obtenerProductos();
     include __DIR__ . '/../../web/templates/producto_cliente.php';
 }
 

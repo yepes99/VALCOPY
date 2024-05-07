@@ -146,6 +146,27 @@ public function obtenerProductos()
         return false; // Indicar que hubo un error en la consulta
     }
 }
+public function obtenerProductosPorCategoria($categoria)
+{
+    try {
+        // Preparar la consulta SQL para obtener productos por categoría
+        $stmt = $this->conexion->prepare("SELECT * FROM productos WHERE categoria = :categoria");
+
+        // Vincular el parámetro de categoría
+        $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener y devolver los productos filtrados por categoría como un array asociativo
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        // Manejar errores de base de datos
+        echo "Error al obtener productos por categoría: " . $e->getMessage();
+        return false; // Indicar que hubo un error en la consulta
+    }
+}
+
 
 public function obtenerUsuarioPorId($id_usuario)
 {
