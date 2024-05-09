@@ -206,4 +206,125 @@ public function obtenerProductoPorId($id_producto)
     }
 }
 
+
+public function actualizarCantidadEnCesta($id_usuario, $id_producto, $cantidad)
+{
+    try {
+        // Verificar si el producto está en la cesta del usuario
+        $stmt = $this->conexion->prepare("SELECT * FROM cesta WHERE id_usuario = ? AND id_producto = ?");
+        $stmt->execute([$id_usuario, $id_producto]);
+        $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($producto) {
+            // Actualizar la cantidad del producto en la cesta
+            $stmt = $this->conexion->prepare("UPDATE cesta SET cantidad = ? WHERE id_usuario = ? AND id_producto = ?");
+            $stmt->execute([$cantidad, $id_usuario, $id_producto]);
+            return true; // Indicar que la operación fue exitosa
+        } else {
+            return false; // Indicar que el producto no está en la cesta
+        }
+    } catch (PDOException $e) {
+        echo "Error al actualizar cantidad en la cesta: " . $e->getMessage();
+        return false; // Indicar que hubo un error en la operación
+    }
+}
+
+public function eliminarProductoDeCesta($id_usuario, $id_producto)
+    {
+        try {
+            // Eliminar el producto de la cesta del usuario
+            $stmt = $this->conexion->prepare("DELETE FROM cesta WHERE id_usuario = ? AND id_producto = ?");
+            $stmt->execute([$id_usuario, $id_producto]);
+            return true; // Indicar que la operación fue exitosa
+        } catch (PDOException $e) {
+            echo "Error al eliminar producto de la cesta: " . $e->getMessage();
+            return false; // Indicar que hubo un error en la operación
+        }
+    }
+       // Función para vaciar la cesta por completo
+       public function vaciarCesta($id_usuario)
+       {
+           try {
+               // Vaciar la cesta del usuario
+               $stmt = $this->conexion->prepare("DELETE FROM cesta WHERE id_usuario = ?");
+               $stmt->execute([$id_usuario]);
+               return true; // Indicar que la operación fue exitosa
+           } catch (PDOException $e) {
+               echo "Error al vaciar la cesta: " . $e->getMessage();
+               return false; // Indicar que hubo un error en la operación
+           }
+       }
+
+       public function obtenerProductosEnLaCesta($id_usuario)
+{
+    try {
+        // Preparar la consulta SQL para obtener los productos en la cesta del usuario
+        $stmt = $this->conexion->prepare("SELECT p.id_producto, p.nombre, p.precio, cp.cantidad
+                                          FROM productos AS p
+                                          INNER JOIN cesta AS cp ON p.id_producto = cp.id_producto
+                                          WHERE cp.id_usuario = ?");
+        // Ejecutar la consulta
+        $stmt->execute([$id_usuario]);
+
+        // Obtener y devolver los productos en la cesta como un array asociativo
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener productos en la cesta: " . $e->getMessage();
+        return []; // Devolver un array vacío en caso de error
+    }
+}
+
+
+public function agregarProductoACesta($id_usuario, $id_producto, $cantidad)
+{
+    try {
+        // Verificar si el producto ya está en la cesta del usuario
+        $stmt = $this->conexion->prepare("SELECT * FROM cesta WHERE id_usuario = ? AND id_producto = ?");
+        $stmt->execute([$id_usuario, $id_producto]);
+        $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($producto) {
+            // Si el producto ya está en la cesta, actualizar la cantidad
+            $cantidad += $producto['cantidad'];
+            $stmt = $this->conexion->prepare("UPDATE cesta SET cantidad = ? WHERE id_usuario = ? AND id_producto = ?");
+            $stmt->execute([$cantidad, $id_usuario, $id_producto]);
+        } else {
+            // Si el producto no está en la cesta, insertarlo
+            $stmt = $this->conexion->prepare("INSERT INTO cesta (id_usuario, id_producto, cantidad) VALUES (?, ?, ?)");
+            $stmt->execute([$id_usuario, $id_producto, $cantidad]);
+        }
+
+        return true; // Indicar que la operación fue exitosa
+    } catch (PDOException $e) {
+        echo "Error al agregar producto a la cesta: " . $e->getMessage();
+        return false; // Indicar que hubo un error en la operación
+    }
+}
+
+public function obtenerProductosEnCesta($id_usuario) {
+    // Preparar la consulta
+    $query = "SELECT p.id_producto, p.nombre, p.precio, c.cantidad
+              FROM cesta c
+              JOIN productos p ON c.id_producto = p.id_producto
+              WHERE c.id_usuario = :id_usuario";
+    
+    // Preparar la sentencia
+    $stmt = $this->conexion->prepare($query);
+    
+    // Bind de parámetros
+    $stmt->bindParam(":id_usuario", $id_usuario);
+    
+    // Ejecutar la consulta
+    $stmt->execute();
+    
+    // Obtener los resultados
+    $productos_cesta = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Devolver los resultados
+    return $productos_cesta;
+}
+
+
+
+
 }

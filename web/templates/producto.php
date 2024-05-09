@@ -29,8 +29,8 @@ if (isset($_GET['id_producto'])) {
                             <p class="card-text"><strong>Precio:</strong> $<?php echo $producto['precio']; ?></p>
                             <p class="card-text"><strong>Disponibilidad:</strong> <?php echo ucfirst($producto['disponibilidad']); ?></p>
                             <p class="card-text"><strong>Medidas:</strong> <?php echo $producto['medidas']; ?></p>
-                            <button class="btn btn-primary">Añadir a Favoritos</button>
-                            <button class="btn btn-success">Añadir a la Cesta</button>
+                            <button class="btn btn-primary"><a href="index.php?ctl=verCesta">Añadir a cesta</a></button>
+                            <button class="btn btn-success">Añadir a favoritos</button>
                         </div>
                     </div>
                 </div>

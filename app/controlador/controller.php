@@ -316,6 +316,8 @@ public function borrarProducto()
                             header("Location: index.php?ctl=admin");
                             exit;
                         } else {
+                            $_SESSION['id_usuario'] = $usuario['id_usuario']; // Establecer la variable de sesión para el usuario normal
+                            var_dump($_SESSION); // Agregar var_dump para verificar
                             header("Location: index.php?ctl=inicio");
                             exit;
                         }
@@ -330,6 +332,9 @@ public function borrarProducto()
                             header("Location: index.php?ctl=admin");
                             exit;
                         } else {
+                            $_SESSION['id_usuario'] = $usuario['id_usuario']; // Establecer la variable de sesión para el usuario normal
+                
+                            var_dump($_SESSION); // Agregar var_dump para verificar
                             header("Location: index.php?ctl=inicio");
                             exit;
                         }
@@ -346,6 +351,7 @@ public function borrarProducto()
     // Incluimos la vista para mostrar el formulario de inicio de sesión
     require __DIR__ . '/../../web/templates/inicioSesion.php';
 }
+
 
 public function cerrarSesion()
 {
@@ -418,10 +424,56 @@ public function producto(){
     // Crear una instancia de la clase Consultas
     $consultas = new Consultas();
 
-    // Obtener los productos de la categoría 1
-    $productos_categoria1 = $consultas->obtenerProductosPorCategoria(1);
+
     include __DIR__ . '/../../web/templates/producto.php';
 }
+
+public function verCesta(){
+    // Verificar si se pasa el ID del producto como parámetro
+    if(isset($_GET['id_producto'])){
+        // Obtener el ID del producto de la URL
+        $id_producto = $_GET['id_producto'];
+        
+        // Crear una instancia de la clase Consultas
+        $consultas = new Consultas();
+        
+        // Insertar el producto en la cesta
+        $id_usuario = $_SESSION['id_usuario']; // Obtener el ID del usuario de la sesión
+        $cantidad = 1; // Cantidad por defecto
+        if($consultas->agregarProductoACesta($id_usuario, $id_producto, $cantidad)) {
+            echo "Producto agregado a la cesta correctamente.";
+        } else {
+            echo "Error al agregar el producto a la cesta.";
+        }
+    } else {
+        // Manejar el caso en que no se pase el ID del producto como parámetro
+        echo "ID del producto no especificado.";
+    }
+}
+
+public function verCesta2(){
+    // Verificar si hay una sesión iniciada y obtener el ID de usuario
+    if(isset($_SESSION['id_usuario'])){
+        $id_usuario = $_SESSION['id_usuario'];
+        
+        // Crear una instancia de la clase Consultas
+        $consultas = new Consultas();
+        
+        // Obtener los productos de la cesta del usuario
+        $productos_cesta = $consultas->obtenerProductosEnCesta($id_usuario);
+        
+        // Incluir la plantilla cesta_compra.php y pasar los productos a la misma
+        $productos_cesta = $consultas->obtenerProductosEnCesta($id_usuario);
+        include __DIR__ . '/../../web/templates/cesta_compra.php';
+    } else {
+        // Si no hay una sesión iniciada, redirigir al usuario a la página de inicio de sesión
+        header("Location: index.php?ctl=inicioSesion");
+        exit;
+    }
+    // En tu controlador
+
+}
+
 
 public function error() {
         // Error handling logic here
