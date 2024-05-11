@@ -342,5 +342,66 @@ public function actualizarPerfil($id_usuario, $datos_actualizados) {
     }
 }
 
+
+public function registrarPedido($id_usuario, $total) {
+    try {
+        // Obtener la fecha y hora actuales
+        $fecha_pedido = date('Y-m-d H:i:s');
+        
+        // Preparar la consulta SQL para registrar el pedido
+        $sql = "INSERT INTO pedidos (id_usuario, fecha_pedido, total, estado) VALUES (?, ?, ?, 'pendiente')";
+        $stmt = $this->conexion->prepare($sql);
+        
+        // Ejecutar la consulta con los valores proporcionados
+        $stmt->execute([$id_usuario, $fecha_pedido, $total]);
+        
+        // Devolver el ID del pedido recién registrado
+        return $this->conexion->lastInsertId();
+    } catch (PDOException $e) {
+        echo "Error al registrar el pedido: " . $e->getMessage();
+        return false; // Indicar que hubo un error al registrar el pedido
+    }
+}
+public function registrarLineaPedido($id_pedido, $id_producto, $cantidad, $precio)
+{
+    try {
+        // Preparar la consulta SQL para insertar una nueva línea de pedido
+        $sql = "INSERT INTO lineas_pedido (id_pedido, id_producto, cantidad, precio) VALUES (?, ?, ?, ?)";
+        
+        // Preparar y ejecutar la consulta
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute([$id_pedido, $id_producto, $cantidad, $precio]);
+        
+        // Devolver el ID de la línea de pedido recién insertada
+        return $this->conexion->lastInsertId();
+    } catch (PDOException $e) {
+        echo "Error al registrar línea de pedido: " . $e->getMessage();
+        return false; // Indicar que hubo un error al registrar la línea de pedido
+    }
+}
+public function generarFactura($pedido_id, $usuario, $productos_cesta) {
+    // Crear un nuevo registro en la tabla 'facturas' para asociarla al pedido
+    $sql = "INSERT INTO facturas (id_pedido, id_usuario, nombre_cliente, direccion, ciudad, codigo_postal) VALUES (:id_pedido, :id_usuario, :nombre_cliente, :direccion, :ciudad, :codigo_postal)";
+    $stmt = $this->conexion->prepare($sql);
+    $stmt->bindParam(':id_pedido', $pedido_id, PDO::PARAM_INT);
+    $stmt->bindParam(':id_usuario', $usuario['id_usuario'], PDO::PARAM_INT);
+    $stmt->bindParam(':nombre_cliente', $usuario['nombre'], PDO::PARAM_STR);
+    $stmt->bindParam(':direccion', $usuario['direccion'], PDO::PARAM_STR);
+    $stmt->bindParam(':ciudad', $usuario['ciudad'], PDO::PARAM_STR);
+    $stmt->bindParam(':codigo_postal', $usuario['codigo_postal'], PDO::PARAM_STR);
+    $stmt->execute();
+
+    // Crear registros en la tabla 'detalles_factura' para cada producto en la cesta
+    foreach ($productos_cesta as $producto) {
+        $sql = "INSERT INTO detalles_factura (id_factura, id_producto, nombre_producto, cantidad, precio_unitario) VALUES (:id_factura, :id_producto, :nombre_producto, :cantidad, :precio_unitario)";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id_factura', $pedido_id, PDO::PARAM_INT);
+        $stmt->bindParam(':id_producto', $producto['id_producto'], PDO::PARAM_INT);
+        $stmt->bindParam(':nombre_producto', $producto['nombre'], PDO::PARAM_STR);
+        $stmt->bindParam(':cantidad', $producto['cantidad'], PDO::PARAM_INT);
+        $stmt->bindParam(':precio_unitario', $producto['precio'], PDO::PARAM_STR);
+        $stmt->execute();
+    }
 }
 
+}

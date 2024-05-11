@@ -513,7 +513,7 @@ public function verCesta(){
         if(empty($_SESSION['id_usuario'])){
             header("Location: index.php?ctl=inicioSesion");
             exit;
-        }else{
+        } else {
             $id_usuario = $_SESSION['id_usuario']; // Obtener el ID del usuario de la sesión
         }
        
@@ -541,21 +541,49 @@ public function verCesta2(){
         $productos_cesta = $consultas->obtenerProductosEnCesta($id_usuario);
         
         // Incluir la plantilla cesta_compra.php y pasar los productos a la misma
-        $productos_cesta = $consultas->obtenerProductosEnCesta($id_usuario);
         include __DIR__ . '/../../web/templates/cesta_compra.php';
     } else {
         // Si no hay una sesión iniciada, redirigir al usuario a la página de inicio de sesión
         header("Location: index.php?ctl=inicioSesion");
         exit;
     }
-    // En tu controlador
-
 }
 
 public function pago(){
-    
-    include __DIR__ . '/../../web/templates/pago.php';
+     if(isset($_POST['bAceptar'])){
+        $nombreTarjeta=$_POST['nombre'];
+        $numeroTarjeta=$_POST['numero_tarjeta'];
+        $fechaExpiracion=$_POST['fecha_exp'];
+        $cvv=$_POST['cvv'];
+        $direccionFacturacion=$_POST['ciudad'];
+        $codigoPostal=$_POST['codigo_postal'];
+
+        //validar datos
+        if(empty($nombreTarjeta) || empty($numeroTarjeta) || empty($fechaExpiracion) || empty($cvv) || empty($direccionFacturacion) || empty($codigoPostal)){
+           
+        echo '<script>alert("Por favor, complete todos los campos del formulario de pago.");</script>';
+        return;
+        }
+
+         // Simular el procesamiento del pago
+         $pagoExitoso=true;
+
+         if($pagoExitoso){
+            if(isset($_SESSION['id_usuario'])){
+                $id_usuario=$_SESSION['id_usuario'];
+
+                $consultas=new Consultas();
+
+                $pedido_id=$consultas->registrarPedido($id_usuario,30);
+                $usuario = $consultas->obtenerUsuarioPorId($id_usuario);
+                $productos_cesta = $consultas->obtenerProductosEnCesta($id_usuario);
+                $consultas->generarFactura($pedido_id, $usuario, $productos_cesta);
+            }
+         }
+     }
+include __DIR__ . '/../../web/templates/pago.php';
 }
+
 
 
 
