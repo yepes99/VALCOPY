@@ -33,37 +33,64 @@ if (isset($_SESSION['id_usuario'])) {
 }
 ?>
 
-<!-- Mostrar los datos actuales del usuario -->
-<p>Nombre de Usuario: <?php echo $user; ?></p>
-<p>Nombre: <?php echo $nombre; ?></p>
-<p>Apellidos: <?php echo $apellidos; ?></p>
-<p>Número de Teléfono: <?php echo $telefono; ?></p>
-<p>Ciudad: <?php echo $ciudad; ?></p>
-<p>País: <?php echo $pais; ?></p>
-<p>Correo Electrónico: <?php echo $email; ?></p>
+
 
 <!-- Formulario para actualizar el perfil -->
-<form action="index.php?ctl=verPerfil" method="POST">
-    <label for="inputUsername">Nombre de Usuario:</label><br>
-    <input type="text" id="inputUsername" name="user" value="<?php echo $user; ?>"><br><br>
-    
-    <label for="inputFirstName">Nombre:</label><br>
-    <input type="text" id="inputFirstName" name="nombre" value="<?php echo $nombre; ?>"><br><br>
-    
-    <label for="inputLastName">Apellidos:</label><br>
-    <input type="text" id="inputLastName" name="apellidos" value="<?php echo $apellidos; ?>"><br><br>
-    
-    <label for="inputPhone">Número de Teléfono:</label><br>
-    <input type="tel" id="inputPhone" name="telefono" value="<?php echo $telefono; ?>"><br><br>
-    
-    <label for="inputCity">Ciudad:</label><br>
-    <input type="text" id="inputCity" name="ciudad" value="<?php echo $ciudad; ?>"><br><br>
-    
-    <label for="inputCountry">País:</label><br>
-    <input type="text" id="inputCountry" name="pais" value="<?php echo $pais; ?>"><br><br>
-    
-    <label for="inputEmail">Correo Electrónico:</label><br>
-    <input type="email" id="inputEmail" name="email" value="<?php echo $email; ?>"><br><br>
-    
-    <input type="submit" value="Actualizar Datos" name="bAceptar">
-</form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="index.php?ctl=verPerfil" method="POST">
+                <div class="mb-3">
+                    <label for="inputUsername" class="form-label">Nombre de Usuario:</label>
+                    <input type="text" id="inputUsername" name="user" class="form-control" value="<?php echo $user; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputFirstName" class="form-label">Nombre:</label>
+                    <input type="text" id="inputFirstName" name="nombre" class="form-control" value="<?php echo $nombre; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputLastName" class="form-label">Apellidos:</label>
+                    <input type="text" id="inputLastName" name="apellidos" class="form-control" value="<?php echo $apellidos; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputPhone" class="form-label">Número de Teléfono:</label>
+                    <input type="tel" id="inputPhone" name="telefono" class="form-control" value="<?php echo $telefono; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputCity" class="form-label">Ciudad:</label>
+                    <input type="text" id="inputCity" name="ciudad" class="form-control" value="<?php echo $ciudad; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputCountry" class="form-label">País:</label>
+                    <input type="text" id="inputCountry" name="pais" class="form-control" value="<?php echo $pais; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Correo Electrónico:</label>
+                    <input type="email" id="inputEmail" name="email" class="form-control" value="<?php echo $email; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputAddress" class="form-label">Dirección:</label>
+                    <input type="text" id="inputAddress" name="direccion" class="form-control" value="<?php echo $direccion; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputPostalCode" class="form-label">Código Postal:</label>
+                    <input type="text" id="inputPostalCode" name="codigo_postal" class="form-control" value="<?php echo $codigo_postal; ?>">
+                </div>
+
+             
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary" name="bAceptar">Actualizar Datos</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

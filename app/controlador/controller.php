@@ -390,6 +390,9 @@ public function verPerfil()
                 $ciudad = $_POST["ciudad"];
                 $pais = $_POST["pais"];
                 $email = $_POST["email"];
+                $direccion = $_POST["direccion"];
+                $codigo_postal = $_POST["codigo_postal"];
+            
                 
                 // Crear un array para almacenar los datos actualizados
                 $datos_actualizados = array(
@@ -398,19 +401,21 @@ public function verPerfil()
                     'telefono' => $telefono,
                     'ciudad' => $ciudad,
                     'pais' => $pais,
-                    'email' => $email
+                    'email' => $email,
+                    'direccion' => $direccion,
+                    'codigo_postal' => $codigo_postal
+                  
                 );
                 
-                // Actualizar el perfil del usuario en la base de datos
                 if($consultas->actualizarPerfil($id_usuario, $datos_actualizados)){
-                    // Redireccionar a la página de perfil con un mensaje de éxito
-                    header("Location: perfil.php?mensaje=actualizacion_exitosa");
+                    // Redireccionar a la página de perfil del usuario con un mensaje de éxito
+                    header("Location: index.php?ctl=perfilUsuario");
                     exit;
                 } else {
                     // Redireccionar a la página de perfil con un mensaje de error
-                    header("Location: perfil.php?mensaje=error_actualizacion");
-                    exit;
+                   echo "error";
                 }
+                
             }
             
             // Extraer los datos del usuario
@@ -420,6 +425,10 @@ public function verPerfil()
             $ciudad = $usuario['ciudad'];
             $pais = $usuario['pais'];
             $email = $usuario['email'];
+            $password = $usuario['password'];
+            $direccion = $usuario['direccion'];
+            $codigo_postal = $usuario['codigo_postal'];
+            $tipo_usuario = $usuario['tipo_usuario'];
             
             // Incluir el archivo de la vista verPerfil.php y pasar los datos del usuario a la misma
             include __DIR__ . '/../../web/templates/verPerfil.php';
@@ -434,8 +443,44 @@ public function verPerfil()
     }
 }
 
+public function perfilUsuario(){
+    // Verificar si hay una sesión iniciada y obtener el ID de usuario
+    if(isset($_SESSION['id_usuario'])){
+        // Obtener el ID del usuario de la sesión
+        $id_usuario = $_SESSION['id_usuario'];
+        
+        // Crear una instancia de la clase Consultas
+        $consultas = new Consultas();
+        
+        // Obtener los datos del usuario desde la base de datos
+        $usuario = $consultas->obtenerUsuarioPorId($id_usuario);
 
+        // Verificar si se encontró al usuario
+        if ($usuario) {
+            // Extraer los datos del usuario
+            $nombre = $usuario['nombre'];
+            $apellidos = $usuario['apellidos'];
+            $telefono = $usuario['telefono'];
+            $ciudad = $usuario['ciudad'];
+            $pais = $usuario['pais'];
+            $email = $usuario['email'];
+            $direccion = $usuario['direccion'];
+            $codigo_postal = $usuario['codigo_postal'];
+            
+            // Incluir el archivo de la vista perfil_usuario.php y pasar los datos del usuario a la misma
+            include __DIR__ . '/../../web/templates/perfil_usuario.php';
+        } else {
+            // Mostrar un mensaje de error si no se encontró al usuario
+            echo "Error: Usuario no encontrado.";
+        }
+    } else {
+        // Si no hay una sesión iniciada, redirigir al usuario a la página de inicio de sesión
+        header("Location: index.php?ctl=inicioSesion");
+        exit;
+    include __DIR__ . '/../../web/templates/perfil_usuario.php';
+}
 
+}
 
 public function visualizarProductos(){
     // Crear una instancia de la clase Consultas

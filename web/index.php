@@ -39,6 +39,7 @@ $map = array(
     'verProductos' => array('controller' => 'Controller', 'action' => 'verProductos', 'nivel' => 0),
     'cerrarSesion' => array('controller' => 'Controller', 'action' => 'cerrarSesion', 'nivel' => 0),
     'verPerfil' => array('controller' => 'Controller', 'action' => 'verPerfil', 'nivel' => 0),
+    'perfilUsuario' => array('controller' => 'Controller', 'action' => 'perfilUsuario', 'nivel' => 0),
     'error' => array('controller' => 'Controller', 'action' => 'error', 'nivel' => 0),
     'visualizarProductos' => array('controller' => 'Controller', 'action' => 'visualizarProductos', 'nivel' => 0),
     'producto' => array('controller' => 'Controller', 'action' => 'producto', 'nivel' => 0),
