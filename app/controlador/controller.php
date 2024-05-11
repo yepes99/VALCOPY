@@ -368,47 +368,74 @@ public function cerrarSesion()
 
 public function verPerfil()
 {
-    // Verificar si hay una sesión iniciada
-    session_start();
-
-    // Verificar si el usuario está autenticado
-    if (isset($_SESSION['id_usuario'])) {
+    // Verificar si hay una sesión iniciada y obtener el ID de usuario
+    if(isset($_SESSION['id_usuario'])){
         // Obtener el ID del usuario de la sesión
         $id_usuario = $_SESSION['id_usuario'];
-
-        // Crear una instancia de Consultas
-        $consulta = new Consultas();
-
+        
+        // Crear una instancia de la clase Consultas
+        $consultas = new Consultas();
+        
         // Obtener los datos del usuario desde la base de datos
-        $usuario = $consulta->obtenerUsuarioPorId($id_usuario);
+        $usuario = $consultas->obtenerUsuarioPorId($id_usuario);
 
-        // Verificar si se encontró el usuario
+        // Verificar si se encontró al usuario
         if ($usuario) {
-            // Asignar los datos del usuario a variables
-            $user = $usuario['user'];
+            // Verificar si se envió el formulario de actualización
+            if(isset($_POST['bAceptar'])){
+                // Recoger los datos del formulario
+                $nombre = $_POST["nombre"];
+                $apellidos = $_POST["apellidos"];
+                $telefono = $_POST["telefono"];
+                $ciudad = $_POST["ciudad"];
+                $pais = $_POST["pais"];
+                $email = $_POST["email"];
+                
+                // Crear un array para almacenar los datos actualizados
+                $datos_actualizados = array(
+                    'nombre' => $nombre,
+                    'apellidos' => $apellidos,
+                    'telefono' => $telefono,
+                    'ciudad' => $ciudad,
+                    'pais' => $pais,
+                    'email' => $email
+                );
+                
+                // Actualizar el perfil del usuario en la base de datos
+                if($consultas->actualizarPerfil($id_usuario, $datos_actualizados)){
+                    // Redireccionar a la página de perfil con un mensaje de éxito
+                    header("Location: perfil.php?mensaje=actualizacion_exitosa");
+                    exit;
+                } else {
+                    // Redireccionar a la página de perfil con un mensaje de error
+                    header("Location: perfil.php?mensaje=error_actualizacion");
+                    exit;
+                }
+            }
+            
+            // Extraer los datos del usuario
             $nombre = $usuario['nombre'];
             $apellidos = $usuario['apellidos'];
-            $organizacion = $usuario['organizacion'];
+            $telefono = $usuario['telefono'];
             $ciudad = $usuario['ciudad'];
             $pais = $usuario['pais'];
             $email = $usuario['email'];
-            $telefono = $usuario['telefono'];
-            $fecha_nacimiento = $usuario['fecha_nacimiento'];
             
-            // Incluir la vista para mostrar el perfil del usuario
+            // Incluir el archivo de la vista verPerfil.php y pasar los datos del usuario a la misma
             include __DIR__ . '/../../web/templates/verPerfil.php';
         } else {
-            // En caso de que no se encuentre el usuario, redirigir a una página de error o manejar de otra manera
-            echo "Usuario no encontrado.";
-            
+            // Mostrar un mensaje de error si no se encontró al usuario
+            echo "Error: Usuario no encontrado.";
         }
     } else {
-        // Si el usuario no está autenticado, redirigir a la página de inicio de sesión o manejar de otra manera
-        echo "Usuario no autenticado.";
-        header("Location: index.php?ctl=inicio");
+        // Si no hay una sesión iniciada, redirigir al usuario a la página de inicio de sesión
+        header("Location: index.php?ctl=inicioSesion");
         exit;
     }
 }
+
+
+
 
 public function visualizarProductos(){
     // Crear una instancia de la clase Consultas
@@ -438,7 +465,13 @@ public function verCesta(){
         $consultas = new Consultas();
         
         // Insertar el producto en la cesta
-        $id_usuario = $_SESSION['id_usuario']; // Obtener el ID del usuario de la sesión
+        if(empty($_SESSION['id_usuario'])){
+            header("Location: index.php?ctl=inicioSesion");
+            exit;
+        }else{
+            $id_usuario = $_SESSION['id_usuario']; // Obtener el ID del usuario de la sesión
+        }
+       
         $cantidad = 1; // Cantidad por defecto
         if($consultas->agregarProductoACesta($id_usuario, $id_producto, $cantidad)) {
             echo "Producto agregado a la cesta correctamente.";
@@ -473,6 +506,13 @@ public function verCesta2(){
     // En tu controlador
 
 }
+
+public function pago(){
+    
+    include __DIR__ . '/../../web/templates/pago.php';
+}
+
+
 
 
 public function error() {

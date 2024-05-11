@@ -44,6 +44,7 @@ $map = array(
     'producto' => array('controller' => 'Controller', 'action' => 'producto', 'nivel' => 0),
     'verCesta' => array('controller' => 'Controller', 'action' => 'verCesta', 'nivel' => 0),
     'verCesta2' => array('controller' => 'Controller', 'action' => 'verCesta2', 'nivel' => 0),
+    'pago' => array('controller' => 'Controller', 'action' => 'pago', 'nivel' => 0),
 );
 
 // Parseo de la ruta

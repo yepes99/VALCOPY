@@ -1,98 +1,69 @@
 <?php include('./templates/layout.php'); ?>
 
-<div class="container-xl px-4 mt-4">
-       
-        <hr class="mt-0 mb-4">
-        <div class="row">
-            <div class="col-xl-4">
-                <!-- Profile picture card-->
-                <div class="card mb-4 mb-xl-0">
-                    <div class="card-header">Profile Picture</div>
-                    <div class="card-body text-center">
-                        <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" src="<?php echo $foto_perfil;?>" alt="Profile Picture">
-                        <!-- Profile picture help block-->
-                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                        <!-- Profile picture upload button-->
-                        <button class="btn btn-primary" type="button">Upload new image</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-8">
-                <!-- Account details card-->
-                <div class="card mb-4">
-                    <div class="card-header">Account Details</div>
-                    <div class="card-body">
-                        <form>
-                            <!-- Form Group (username)-->
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
-                                <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="<?php echo $user;?>" disabled>
-                            </div>
-                            <!-- Form Row-->
-                            <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputFirstName">First name</label>
-                                    <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="<?php echo $nombre;?>" disabled>
-                                </div>
-                                <!-- Form Group (last name)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputLastName">Last name</label>
-                                    <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="<?php echo $apellidos;?>" disabled>
-                                </div>
-                            </div>
-                            <!-- Form Row        -->
-                            <div class="row gx-3 mb-3">
-                                <!-- Form Group (organization name)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputOrgName">Organization name</label>
-                                    <input class="form-control" id="inputOrgName" type="text" placeholder="Enter your organization name" value="<?php echo $organizacion;?>" disabled>
-                                </div>
-                                <!-- Form Group (location)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputLocation">Location</label>
-                                    <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="<?php echo $ciudad . ', ' . $pais;?>" disabled>
-                                </div>
-                            </div>
-                            <!-- Form Group (email address)-->
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="<?php echo $email;?>" disabled>
-                            </div>
-                            <!-- Form Row-->
-                            <div class="row gx-3 mb-3">
-                                <!-- Form Group (phone number)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputPhone">Phone number</label>
-                                    <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="<?php echo $telefono;?>" disabled>
-                                </div>
-                                <!-- Form Group (birthday)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                    <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="<?php echo $fecha_nacimiento;?>" disabled>
-                                </div>
-                            </div>
-                            <!-- Save changes button-->
-                            <a href="editar_perfil.php" class="btn btn-primary">Editar Perfil</a>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Messages -->
-        <div class="messages">
-            <div class="message">
-                <div class="message-content">
-                    <div class="message-header">
-                        <div class="name">Usuario 1</div>
-                        <!-- Indicador visual de respuesta -->
-                        <span class="answered-indicator">(Respondido)</span>
-                    </div>
-                    <p class="message-line">Mensaje del usuario 1...</p>
-                    <p class="message-line time">Dec, 11</p>
-                </div>
-            </div>
-            <!-- Agrega más mensajes aquí según sea necesario -->
-        </div>
-    </div>
+<?php
+// Verificar si hay una sesión iniciada y obtener el ID de usuario
+if (isset($_SESSION['id_usuario'])) {
+    $id_usuario = $_SESSION['id_usuario'];
+    
+    // Crear una instancia de la clase Consultas
+    $consultas = new Consultas();
+    
+    // Obtener los datos del usuario desde la base de datos
+    $usuario = $consultas->obtenerUsuarioPorId($id_usuario);
+    
+    // Verificar si se encontró al usuario
+    if ($usuario) {
+        // Extraer los datos del usuario
+        $user = $usuario['user'];
+        $nombre = $usuario['nombre'];
+        $apellidos = $usuario['apellidos'];
+        $telefono = $usuario['telefono'];
+        $ciudad = $usuario['ciudad'];
+        $pais = $usuario['pais'];
+        $email = $usuario['email'];
+    } else {
+        // Mostrar un mensaje de error si no se encontró al usuario
+        echo "Error: Usuario no encontrado.";
+        exit; // Salir del script
+    }
+} else {
+    // Si no hay una sesión iniciada, redirigir al usuario a la página de inicio de sesión
+    header("Location: index.php?ctl=inicioSesion");
+    exit; // Salir del script
+}
+?>
+
+<!-- Mostrar los datos actuales del usuario -->
+<p>Nombre de Usuario: <?php echo $user; ?></p>
+<p>Nombre: <?php echo $nombre; ?></p>
+<p>Apellidos: <?php echo $apellidos; ?></p>
+<p>Número de Teléfono: <?php echo $telefono; ?></p>
+<p>Ciudad: <?php echo $ciudad; ?></p>
+<p>País: <?php echo $pais; ?></p>
+<p>Correo Electrónico: <?php echo $email; ?></p>
+
+<!-- Formulario para actualizar el perfil -->
+<form action="index.php?ctl=verPerfil" method="POST">
+    <label for="inputUsername">Nombre de Usuario:</label><br>
+    <input type="text" id="inputUsername" name="user" value="<?php echo $user; ?>"><br><br>
+    
+    <label for="inputFirstName">Nombre:</label><br>
+    <input type="text" id="inputFirstName" name="nombre" value="<?php echo $nombre; ?>"><br><br>
+    
+    <label for="inputLastName">Apellidos:</label><br>
+    <input type="text" id="inputLastName" name="apellidos" value="<?php echo $apellidos; ?>"><br><br>
+    
+    <label for="inputPhone">Número de Teléfono:</label><br>
+    <input type="tel" id="inputPhone" name="telefono" value="<?php echo $telefono; ?>"><br><br>
+    
+    <label for="inputCity">Ciudad:</label><br>
+    <input type="text" id="inputCity" name="ciudad" value="<?php echo $ciudad; ?>"><br><br>
+    
+    <label for="inputCountry">País:</label><br>
+    <input type="text" id="inputCountry" name="pais" value="<?php echo $pais; ?>"><br><br>
+    
+    <label for="inputEmail">Correo Electrónico:</label><br>
+    <input type="email" id="inputEmail" name="email" value="<?php echo $email; ?>"><br><br>
+    
+    <input type="submit" value="Actualizar Datos" name="bAceptar">
+</form>

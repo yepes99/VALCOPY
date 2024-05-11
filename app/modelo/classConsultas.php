@@ -325,6 +325,21 @@ public function obtenerProductosEnCesta($id_usuario) {
 }
 
 
-
+public function actualizarPerfil($id_usuario, $datos_actualizados) {
+    try {
+        // Construir la consulta SQL para actualizar el perfil del usuario
+        $sql = "UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, telefono = :telefono, ciudad = :ciudad, pais = :pais, email = :email WHERE id_usuario = :id_usuario";
+        
+        // Preparar la consulta
+        $stmt = $this->conexion->prepare($sql);
+        
+        // Ejecutar la consulta con los valores proporcionados
+        return $stmt->execute(array_merge($datos_actualizados, ['id_usuario' => $id_usuario]));
+    } catch (PDOException $e) {
+        echo "Error al actualizar perfil: " . $e->getMessage();
+        return false; // Indicar que hubo un error al actualizar el perfil
+    }
+}
 
 }
+

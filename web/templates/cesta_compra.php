@@ -63,7 +63,7 @@ include('./templates/layout.php');
     </div>
     <div class="row mt-4">
         <div class="col">
-            <button class="btn btn-primary">Pagar</button>
+             <a href="index.php?ctl=pago" class="btn btn-primary" id="btnPagar">Pagar</a>
         </div>
     </div>
 </div>
