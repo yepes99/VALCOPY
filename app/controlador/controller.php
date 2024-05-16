@@ -549,40 +549,177 @@ public function verCesta2(){
     }
 }
 
-public function pago(){
-     if(isset($_POST['bAceptar'])){
-        $nombreTarjeta=$_POST['nombre'];
-        $numeroTarjeta=$_POST['numero_tarjeta'];
-        $fechaExpiracion=$_POST['fecha_exp'];
-        $cvv=$_POST['cvv'];
-        $direccionFacturacion=$_POST['ciudad'];
-        $codigoPostal=$_POST['codigo_postal'];
+public function pago() {
+    if(isset($_POST['bAceptar'])) {
+        // Obtener los datos del formulario de pago
+        $nombreTarjeta = $_POST['nombre'];
+        $numeroTarjeta = $_POST['numero_tarjeta'];
+        $fechaExpiracion = $_POST['fecha_exp'];
+        $cvv = $_POST['cvv'];
+        $direccionFacturacion = $_POST['ciudad'];
+        $codigoPostal = $_POST['codigo_postal'];
+    
+        // Validar datos del formulario
+        if(empty($nombreTarjeta) || empty($numeroTarjeta) || empty($fechaExpiracion) || empty($cvv) || empty($direccionFacturacion) || empty($codigoPostal)) {
+            echo"Por favor, complete todos los campos del formulario de pago.";
+            return;
+        }
+    
+        // Simular el procesamiento del pago (aquí deberías agregar la lógica real de procesamiento de pago)
+        $pagoExitoso = true;
+    
+        if($pagoExitoso) {
+            // Obtener el ID del usuario de la sesión
+            if(isset($_SESSION['id_usuario'])) {
+                $id_usuario = $_SESSION['id_usuario'];
+    
+                // Crear instancias de las clases de consultas
+               
+    
+                // Obtener detalles del usuario y productos en la cesta
+                $consulta=new Consultas();
+                $usuario =  $consulta->obtenerUsuarioPorId($id_usuario);
+                $productos_cesta =  $consulta->obtenerProductosEnCesta($id_usuario);
+    
+                // Calcular el total de la cesta con el 21% de IVA
+                $totalCesta = 0;
+                foreach ($productos_cesta as $producto) {
+                    $totalCesta += $producto['precio'];
+                }
+                $iva = $totalCesta * 0.21;
+                $totalConIva = $totalCesta + $iva;
+    
+                // Registrar el pedido
+                $pedido_id = $consulta->registrarPedido($id_usuario, $totalConIva);
+    
+                // Generar la factura
+                if($pedido_id !== false) {
+                    $facturaGenerada = $consulta->generarFactura($pedido_id, $id_usuario, $productos_cesta, $totalConIva);
 
-        //validar datos
-        if(empty($nombreTarjeta) || empty($numeroTarjeta) || empty($fechaExpiracion) || empty($cvv) || empty($direccionFacturacion) || empty($codigoPostal)){
-           
-        echo '<script>alert("Por favor, complete todos los campos del formulario de pago.");</script>';
-        return;
+                    if($facturaGenerada) {
+                        // Eliminar productos de la cesta después de generar la factura
+                        // Aquí deberías agregar el código para eliminar productos de la cesta
+                        // por ejemplo: $consultasProductos->eliminarProductosEnCesta($id_usuario);
+    
+                        // Mostrar mensaje de pago exitoso con detalles de la factura
+                      echo "Pago exitoso.\n\nDetalles de la factura:\nTotal: $totalConIva (IVA incluido)\nIVA (21%): $iva";
+                    } else {
+                        echo"Error al generar la factura.";
+                    }
+                } else {
+                    echo"Error al registrar el pedido.";
+                }
+            } else {
+                echo"Error: Usuario no identificado.";
+            }
+        } else {
+           echo"Error en el procesamiento del pago.";
+        }
+    }
+    include __DIR__ . '/../../web/templates/pago.php';
+
+  
+ 
+}
+
+public function gestionPedidos()
+{
+    include __DIR__ . '/../../web/templates/gestionPedidos.php';
+}
+
+
+
+public function eliminarPedido()
+{
+    if (isset($_POST['bAceptarEliminar'])) {
+        // Obtener el ID del pedido a eliminar
+        $pedido_id = $_POST['pedido_id'];
+
+        // Eliminar el pedido de la base de datos
+        $consultas = new Consultas(); // Instancia de la clase Consultas
+        $exito = $consultas->eliminarPedido($pedido_id);
+
+        if ($exito) {
+            // Redirigir o mostrar un mensaje de éxito
+            header('Location: index.php?ctl=gestionPedidos');
+            exit();
+        } else {
+            echo "Error al eliminar el pedido.";
+        }
+    }
+}
+
+
+public function editarPedido()
+{
+    if (isset($_POST['bAceptarEditar'])) {
+        // Obtener datos del formulario
+        $pedido_id = $_POST['pedido_id'];
+        $nuevo_estado = $_POST['nuevo_estado'];
+        $transportista = $_POST['transportista'];
+        $metodo_pago = $_POST['metodo_pago'];
+
+        // Validar que el nuevo estado sea uno de los valores permitidos
+        $estadosPermitidos = ['pendiente', 'enviado', 'entregado', 'cancelado'];
+        if (!in_array($nuevo_estado, $estadosPermitidos)) {
+            echo "Error: Estado de pedido no válido.";
+            return;
         }
 
-         // Simular el procesamiento del pago
-         $pagoExitoso=true;
+        // Obtener datos adicionales de la factura asociada al pedido
+        $consultas = new Consultas();
+        $factura = $consultas->obtenerFacturaPorPedido($pedido_id);
+        $transportista_factura = $factura['transportista'];
+        $metodo_pago_factura = $factura['metodo_pago'];
 
-         if($pagoExitoso){
-            if(isset($_SESSION['id_usuario'])){
-                $id_usuario=$_SESSION['id_usuario'];
+        // Actualizar el pedido en la base de datos
+        $exito = $consultas->editarPedido($pedido_id, $nuevo_estado, $transportista, $metodo_pago);
 
-                $consultas=new Consultas();
-
-                $pedido_id=$consultas->registrarPedido($id_usuario,30);
-                $usuario = $consultas->obtenerUsuarioPorId($id_usuario);
-                $productos_cesta = $consultas->obtenerProductosEnCesta($id_usuario);
-                $consultas->generarFactura($pedido_id, $usuario, $productos_cesta);
-            }
-         }
-     }
-include __DIR__ . '/../../web/templates/pago.php';
+        if ($exito) {
+            // Redirigir o mostrar un mensaje de éxito
+            header('Location: index.php?ctl=gestionPedidos');
+            exit();
+        } else {
+            echo "Error al editar el pedido.";
+        }
+    }
 }
+public function verPedidosPorCliente()
+{
+    if (isset($_POST['verPedidosCliente'])) {
+        // Obtener el ID del cliente ingresado en el formulario
+        $cliente_id = $_POST['cliente_id'];
+
+        // Consultar la base de datos para obtener los pedidos del cliente
+        $consultas = new Consultas();
+        $pedidosCliente = $consultas->obtenerPedidosPorCliente($cliente_id);
+
+        // Pasar los datos a la vista
+        include __DIR__ . '/../../web/templates/gestionPedidos.php';
+    }
+}
+
+public function gestionUsuarios(){
+    $consulta = new Consultas();
+    $usuario = null; // Initialize $usuario variable
+
+    // Verificar si se está realizando una búsqueda
+    if(isset($_POST['bBuscar'])){
+        // Obtener el ID del usuario a buscar
+        $id_usuario = $_POST['id_usuario'];
+
+        // Realizar la búsqueda del usuario por su ID
+        $usuario = $consulta->buscarUsuarioPorId($id_usuario);
+    } else {
+        if(isset($_POST['bListar'])){
+            // Call the listarTodosLosUsuarios() function from the Consultas class
+            $usuarios = $consulta->listarTodosLosUsuarios();
+        }
+    }
+
+    include __DIR__ . '/../../web/templates/gestionUsuarios.php';
+}
+
 
 
 

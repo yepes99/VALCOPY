@@ -74,3 +74,14 @@ CREATE TABLE facturas (
     forma_pago VARCHAR(255),
     CONSTRAINT fk_pedido_factura FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido)
 );
+
+CREATE TABLE detalles_factura (
+    id_detalle_factura INT PRIMARY KEY AUTO_INCREMENT,
+    id_factura INT,
+    id_producto INT,
+    nombre_producto VARCHAR(255),
+    cantidad INT,
+    precio_unitario DECIMAL(10,2),
+    CONSTRAINT fk_factura FOREIGN KEY (id_factura) REFERENCES facturas(id_factura),
+    CONSTRAINT fk_producto_factura FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
+);

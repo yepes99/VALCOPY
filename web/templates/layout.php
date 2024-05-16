@@ -22,6 +22,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
        
        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="../web/styles/styles.css" />
    
@@ -47,7 +48,10 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                     <a class="nav-link" href="index.php?ctl=gestionProductos">Gestión de Productos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="gestionPedidos.html">Gestión de Pedidos</a>
+                    <a class="nav-link" href="index.php?ctl=gestionPedidos">Gestión de Pedidos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?ctl=gestionUsuarios">Gestión de Usuarios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="index.php?ctl=inicio">Volver Web</a>

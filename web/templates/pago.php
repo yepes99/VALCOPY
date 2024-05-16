@@ -27,7 +27,7 @@ if(isset($_SESSION['id_usuario'])){
 
 <div class="container mt-5">
   <h1 class="mb-4">Proceso de Pago</h1>
-  <form action="index.php?ctl=pago" method="POST">
+  <form id="form-pago" action="index.php?ctl=pago" method="POST">
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre en la Tarjeta</label>
       <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre en la Tarjeta" required>
@@ -58,6 +58,37 @@ if(isset($_SESSION['id_usuario'])){
       <label for="codigo_postal" class="form-label">Código Postal</label>
       <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="Código Postal" value="<?php echo $usuario['codigo_postal']; ?>" required>
     </div>
-    <button type="submit" class="btn btn-primary" name="bAceptar">Realizar pedido</button>
+    <button type="button" id="btn-realizar-pedido" class="btn btn-primary">Realizar pedido</button>
   </form>
 </div>
+
+<!-- Importar jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+
+<script>
+  document.getElementById('btn-realizar-pedido').addEventListener('click', function() {
+    // Crear un nuevo documento PDF
+    const doc = new jsPDF();
+
+    // Obtener los datos del formulario
+    const nombre = document.getElementById('nombre').value;
+    const numeroTarjeta = document.getElementById('numero_tarjeta').value;
+    const fechaExp = document.getElementById('fecha_exp').value;
+    const cvv = document.getElementById('cvv').value;
+    const direccion = document.getElementById('direccion').value;
+    const ciudad = document.getElementById('ciudad').value;
+    const codigoPostal = document.getElementById('codigo_postal').value;
+
+    // Agregar los datos al PDF
+    doc.text(20, 20, 'Nombre en la Tarjeta: ' + nombre);
+    doc.text(20, 30, 'Número de Tarjeta: ' + numeroTarjeta);
+    doc.text(20, 40, 'Fecha de Expiración: ' + fechaExp);
+    doc.text(20, 50, 'CVV: ' + cvv);
+    doc.text(20, 60, 'Dirección de Facturación: ' + direccion);
+    doc.text(20, 70, 'Ciudad: ' + ciudad);
+    doc.text(20, 80, 'Código Postal: ' + codigoPostal);
+
+    // Guardar el PDF
+    doc.save('pedido.pdf');
+  });
+</script>

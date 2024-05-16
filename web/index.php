@@ -46,6 +46,14 @@ $map = array(
     'verCesta' => array('controller' => 'Controller', 'action' => 'verCesta', 'nivel' => 0),
     'verCesta2' => array('controller' => 'Controller', 'action' => 'verCesta2', 'nivel' => 0),
     'pago' => array('controller' => 'Controller', 'action' => 'pago', 'nivel' => 0),
+    'gestionPedidos' => array('controller' => 'Controller', 'action' => 'gestionPedidos', 'nivel' => 0),
+    'editarPedido' => array('controller' => 'Controller', 'action' => 'editarPedido', 'nivel' => 0),
+    'eliminarPedido' => array('controller' => 'Controller', 'action' => 'eliminarPedido', 'nivel' => 0),
+    'verPedidosPorCliente' => array('controller' => 'Controller', 'action' => 'verPedidosPorCliente', 'nivel' => 0),
+    'gestionUsuarios' => array('controller' => 'Controller', 'action' => 'gestionUsuarios', 'nivel' => 0),
+    'agregarUsuario' => array('controller' => 'Controller', 'action' => 'gestionUsuarios', 'nivel' => 0),
+ 
+ 
 );
 
 // Parseo de la ruta

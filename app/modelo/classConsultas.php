@@ -302,26 +302,18 @@ public function agregarProductoACesta($id_usuario, $id_producto, $cantidad)
 }
 
 public function obtenerProductosEnCesta($id_usuario) {
-    // Preparar la consulta
-    $query = "SELECT p.id_producto, p.nombre, p.precio, c.cantidad
-              FROM cesta c
-              JOIN productos p ON c.id_producto = p.id_producto
-              WHERE c.id_usuario = :id_usuario";
-    
-    // Preparar la sentencia
-    $stmt = $this->conexion->prepare($query);
-    
-    // Bind de parámetros
-    $stmt->bindParam(":id_usuario", $id_usuario);
-    
-    // Ejecutar la consulta
-    $stmt->execute();
-    
-    // Obtener los resultados
-    $productos_cesta = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Devolver los resultados
-    return $productos_cesta;
+    try {
+        $sql = "SELECT p.id_producto, p.nombre, p.precio, c.cantidad 
+                FROM productos p
+                INNER JOIN cesta c ON p.id_producto = c.id_producto
+                WHERE c.id_usuario = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute([$id_usuario]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener productos en cesta: " . $e->getMessage();
+        return false;
+    }
 }
 
 
@@ -347,14 +339,14 @@ public function registrarPedido($id_usuario, $total) {
     try {
         // Obtener la fecha y hora actuales
         $fecha_pedido = date('Y-m-d H:i:s');
-        
+
         // Preparar la consulta SQL para registrar el pedido
         $sql = "INSERT INTO pedidos (id_usuario, fecha_pedido, total, estado) VALUES (?, ?, ?, 'pendiente')";
         $stmt = $this->conexion->prepare($sql);
-        
+
         // Ejecutar la consulta con los valores proporcionados
         $stmt->execute([$id_usuario, $fecha_pedido, $total]);
-        
+
         // Devolver el ID del pedido recién registrado
         return $this->conexion->lastInsertId();
     } catch (PDOException $e) {
@@ -362,16 +354,16 @@ public function registrarPedido($id_usuario, $total) {
         return false; // Indicar que hubo un error al registrar el pedido
     }
 }
-public function registrarLineaPedido($id_pedido, $id_producto, $cantidad, $precio)
-{
+
+public function registrarLineaPedido($id_pedido, $id_producto, $cantidad, $precio) {
     try {
         // Preparar la consulta SQL para insertar una nueva línea de pedido
         $sql = "INSERT INTO lineas_pedido (id_pedido, id_producto, cantidad, precio) VALUES (?, ?, ?, ?)";
-        
+
         // Preparar y ejecutar la consulta
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute([$id_pedido, $id_producto, $cantidad, $precio]);
-        
+
         // Devolver el ID de la línea de pedido recién insertada
         return $this->conexion->lastInsertId();
     } catch (PDOException $e) {
@@ -379,29 +371,176 @@ public function registrarLineaPedido($id_pedido, $id_producto, $cantidad, $preci
         return false; // Indicar que hubo un error al registrar la línea de pedido
     }
 }
-public function generarFactura($pedido_id, $usuario, $productos_cesta) {
-    // Crear un nuevo registro en la tabla 'facturas' para asociarla al pedido
-    $sql = "INSERT INTO facturas (id_pedido, id_usuario, nombre_cliente, direccion, ciudad, codigo_postal) VALUES (:id_pedido, :id_usuario, :nombre_cliente, :direccion, :ciudad, :codigo_postal)";
-    $stmt = $this->conexion->prepare($sql);
-    $stmt->bindParam(':id_pedido', $pedido_id, PDO::PARAM_INT);
-    $stmt->bindParam(':id_usuario', $usuario['id_usuario'], PDO::PARAM_INT);
-    $stmt->bindParam(':nombre_cliente', $usuario['nombre'], PDO::PARAM_STR);
-    $stmt->bindParam(':direccion', $usuario['direccion'], PDO::PARAM_STR);
-    $stmt->bindParam(':ciudad', $usuario['ciudad'], PDO::PARAM_STR);
-    $stmt->bindParam(':codigo_postal', $usuario['codigo_postal'], PDO::PARAM_STR);
-    $stmt->execute();
-
-    // Crear registros en la tabla 'detalles_factura' para cada producto en la cesta
-    foreach ($productos_cesta as $producto) {
-        $sql = "INSERT INTO detalles_factura (id_factura, id_producto, nombre_producto, cantidad, precio_unitario) VALUES (:id_factura, :id_producto, :nombre_producto, :cantidad, :precio_unitario)";
+ // Función para generar una factura y asociarla a un pedido
+ public function generarFactura($pedido_id, $usuario_id, $productos_cesta, $total) {
+    try {
+        // Crear un nuevo registro en la tabla 'facturas' para asociarla al pedido
+        $sql = "INSERT INTO facturas (id_pedido, id_usuario, fecha_factura, total, iva, forma_pago) VALUES (:id_pedido, :id_usuario, NOW(), :total, :iva, 'Tarjeta de crédito')";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':id_factura', $pedido_id, PDO::PARAM_INT);
-        $stmt->bindParam(':id_producto', $producto['id_producto'], PDO::PARAM_INT);
-        $stmt->bindParam(':nombre_producto', $producto['nombre'], PDO::PARAM_STR);
-        $stmt->bindParam(':cantidad', $producto['cantidad'], PDO::PARAM_INT);
-        $stmt->bindParam(':precio_unitario', $producto['precio'], PDO::PARAM_STR);
+        
+        // Calcular el total con IVA (asumiendo un 21% de IVA)
+        $iva = $total * 0.21;
+        $total_con_iva = $total + $iva;
+
+        // Asignar los valores a los parámetros de la consulta
+        $stmt->bindParam(':id_pedido', $pedido_id, PDO::PARAM_INT);
+        $stmt->bindParam(':id_usuario', $usuario_id, PDO::PARAM_INT);
+        $stmt->bindParam(':total', $total_con_iva, PDO::PARAM_STR);
+        $stmt->bindParam(':iva', $iva, PDO::PARAM_STR);
+        
+        // Ejecutar la consulta
         $stmt->execute();
+
+        // Obtener el ID de la factura recién generada
+        $factura_id = $this->conexion->lastInsertId();
+
+        // Registrar los detalles de la factura (productos comprados)
+        foreach ($productos_cesta as $producto) {
+            $this->registrarDetalleFactura($factura_id, $producto['id_producto'], $producto['nombre'], $producto['cantidad'], $producto['precio']);
+        }
+
+        return $factura_id; // Devolver el ID de la factura generada
+    } catch (PDOException $e) {
+        echo "Error al generar la factura: " . $e->getMessage();
+        return false; // Indicar que hubo un error al generar la factura
     }
 }
+// Función para registrar los detalles de una factura (productos comprados)
+private function registrarDetalleFactura($factura_id, $id_producto, $nombre_producto, $cantidad, $precio_unitario) {
+    try {
+        // Preparar la consulta SQL para insertar los detalles de la factura
+        $sql = "INSERT INTO detalles_factura (id_factura, id_producto, nombre_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conexion->prepare($sql);
+        
+        // Ejecutar la consulta con los valores proporcionados
+        $stmt->execute([$factura_id, $id_producto, $nombre_producto, $cantidad, $precio_unitario]);
+    } catch (PDOException $e) {
+        echo "Error al registrar detalles de factura: " . $e->getMessage();
+        return false; // Indicar que hubo un error al registrar los detalles de la factura
+    }
+}
+
+public function eliminarPedido($pedido_id) {
+    try {
+        // Preparar la consulta SQL para eliminar el pedido
+        $sql = "DELETE FROM pedidos WHERE id_pedido = ?";
+        $stmt = $this->conexion->prepare($sql);
+
+        // Ejecutar la consulta con el ID del pedido proporcionado
+        $stmt->execute([$pedido_id]);
+
+        // Devolver true si se eliminó correctamente
+        return true;
+    } catch (PDOException $e) {
+        echo "Error al eliminar el pedido: " . $e->getMessage();
+        return false; // Indicar que hubo un error al eliminar el pedido
+    }
+}
+
+
+
+
+
+public function editarPedido($pedido_id, $nuevo_estado, $transportista, $metodo_pago)
+{
+    try {
+        // Preparar la consulta SQL para actualizar el estado, transportista y método de pago del pedido
+        $sql = "UPDATE pedidos SET estado = ?, transportista = ?, metodo_pago = ? WHERE id_pedido = ?";
+        $stmt = $this->conexion->prepare($sql);
+
+        // Ejecutar la consulta con los nuevos datos y el ID del pedido
+        $stmt->execute([$nuevo_estado, $transportista, $metodo_pago, $pedido_id]);
+
+        // Devolver true si se actualizó correctamente
+        return true;
+    } catch (PDOException $e) {
+        echo "Error al editar el pedido: " . $e->getMessage();
+        return false; // Indicar que hubo un error al editar el pedido
+    }
+}
+public function obtenerFacturaPorPedido($pedido_id)
+{
+    try {
+        // Preparar la consulta SQL para obtener la factura asociada al pedido
+        $sql = "SELECT * FROM facturas WHERE id_pedido = ?";
+        $stmt = $this->conexion->prepare($sql);
+
+        // Ejecutar la consulta con el ID del pedido
+        $stmt->execute([$pedido_id]);
+
+        // Obtener los datos de la factura
+        $factura = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Devolver los datos de la factura
+        return $factura;
+    } catch (PDOException $e) {
+        echo "Error al obtener la factura del pedido: " . $e->getMessage();
+        return false; // Indicar que hubo un error al obtener la factura
+    }
+}
+
+public function obtenerPedidosPorCliente($cliente_id)
+{
+    try {
+        // Preparar la consulta SQL para obtener los pedidos del cliente
+        $sql = "SELECT * FROM pedidos WHERE id_usuario = ?";
+        $stmt = $this->conexion->prepare($sql);
+        
+        // Ejecutar la consulta con el ID del cliente
+        $stmt->execute([$cliente_id]);
+
+        // Obtener y devolver los resultados
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener los pedidos del cliente: " . $e->getMessage();
+        return []; // Devolver un array vacío en caso de error
+    }
+}
+public function buscarUsuarioPorId($id_usuario){
+    // Aquí asumo que tienes una conexión a la base de datos llamada $conexion
+    // Debes reemplazar $conexion con tu conexión real a la base de datos
+
+    // Preparar la consulta SQL
+    $sql = "SELECT * FROM usuarios WHERE id_usuario = :id_usuario";
+
+    // Preparar la sentencia
+    $stmt = $this->conexion->prepare($sql);
+    // Vincular parámetros
+    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+
+    // Ejecutar la consulta
+    $stmt->execute();
+
+    // Obtener el resultado como un array asociativo
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Retornar el resultado
+    return $usuario;
+}
+public function listarTodosLosUsuarios(){
+    // Realizar la consulta para obtener todos los usuarios
+    $sql = "SELECT * FROM usuarios";
+    $result = $this->conexion->query($sql); // Execute the query
+
+    // Verificar si hay resultados
+    if ($result !== false) {
+        // Inicializar un array para almacenar los usuarios
+        $usuarios = array();
+
+        // Iterar sobre los resultados y almacenar cada usuario en el array
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $usuarios[] = $row;
+        }
+
+        // Devolver el array de usuarios
+        return $usuarios;
+    } else {
+        // Si no hay usuarios, devolver un array vacío
+        return array();
+    }
+}
+
+
+
 
 }

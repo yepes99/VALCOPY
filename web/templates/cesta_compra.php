@@ -63,60 +63,55 @@ include('./templates/layout.php');
     </div>
     <div class="row mt-4">
         <div class="col">
-             <a href="index.php?ctl=pago" class="btn btn-primary" id="btnPagar">Pagar</a>
+             <a href="index.php?ctl=pago" class="btn btn-primary" id="btnGenerarFactura">Pagar</a>
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Delegación de eventos para aumentar la cantidad de productos
-        document.addEventListener('click', function (event) {
-            if (event.target.classList.contains('btn-plus')) {
-                var productId = event.target.getAttribute('data-product-id');
-                var quantityElement = event.target.parentElement.parentElement.parentElement.querySelector('.quantity');
-                var currentQuantity = parseInt(quantityElement.value);
-                quantityElement.value = currentQuantity + 1;
+    // Función para generar la factura en PDF
+    document.getElementById('btnGenerarFactura').addEventListener('click', function() {
+        const doc = new jsPDF();
+        const marginLeft = 10;
+        const marginTop = 10;
+        const lineHeight = 7;
+        let y = marginTop;
 
-                // Actualizar el precio total
-                updateTotal();
-            }
-        });
+        // Título
+        doc.setFontSize(20);
+        doc.text('Factura de Compra', marginLeft, y);
+        y += lineHeight * 2;
 
-        // Delegación de eventos para disminuir la cantidad de productos
-        document.addEventListener('click', function (event) {
-            if (event.target.classList.contains('btn-minus')) {
-                var productId = event.target.getAttribute('data-product-id');
-                var quantityElement = event.target.parentElement.parentElement.parentElement.querySelector('.quantity');
-                var currentQuantity = parseInt(quantityElement.value);
-                if (currentQuantity > 1) {
-                    quantityElement.value = currentQuantity - 1;
+        // Datos del cliente
+        doc.setFontSize(14);
+        doc.text('Datos del Cliente:', marginLeft, y);
+        doc.setFontSize(12);
+        y += lineHeight;
+        doc.text(`Nombre: <?php echo $usuario['nombre']; ?>`, marginLeft, y);
+        y += lineHeight;
+        doc.text(`Dirección: <?php echo $usuario['direccion']; ?>`, marginLeft, y);
+        y += lineHeight;
+        doc.text(`Ciudad: <?php echo $usuario['ciudad']; ?>`, marginLeft, y);
+        y += lineHeight;
+        doc.text(`Código Postal: <?php echo $usuario['codigo_postal']; ?>`, marginLeft, y);
+        y += lineHeight * 2;
 
-                    // Actualizar el precio total
-                    updateTotal();
-                }
-            }
-        });
+        // Detalles de la compra
+        doc.setFontSize(14);
+        doc.text('Detalles de la Compra:', marginLeft, y);
+        doc.setFontSize(12);
+        y += lineHeight;
+        <?php foreach($productos_cesta as $producto) { ?>
+            doc.text(`Producto: <?php echo $producto['nombre']; ?> - Cantidad: <?php echo $producto['cantidad']; ?> - Precio Unitario: $<?php echo number_format($producto['precio'], 2); ?>`, marginLeft, y);
+            y += lineHeight;
+        <?php } ?>
+        y += lineHeight * 2;
 
-        // Delegación de eventos para eliminar un producto de la cesta
-        document.addEventListener('click', function (event) {
-            if (event.target.classList.contains('btn-remove')) {
-                event.target.parentElement.parentElement.remove();
+        // Total
+        doc.setFontSize(14);
+        doc.text(`Total: $<?php echo number_format($total, 2); ?>`, marginLeft, y);
 
-                // Actualizar el precio total
-                updateTotal();
-            }
-        });
-
-        // Función para actualizar el precio total
-        function updateTotal() {
-            var total = 0;
-            document.querySelectorAll('.product-total').forEach(function (element) {
-                var quantity = parseInt(element.parentElement.querySelector('.quantity').value);
-                var price = parseFloat(element.dataset.price); // Obtener el precio del dataset
-                total += price * quantity; // Multiplicar el precio por la cantidad
-            });
-            document.getElementById('total').textContent = '$' + total.toFixed(2);
-        }
+        // Guardar el PDF
+        doc.save('factura.pdf');
     });
 </script>

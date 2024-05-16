@@ -1,12 +1,12 @@
 {
     "name": "proyecto/inkbyte",
-    "description": "Proyecto InkByte 2DAW",
+    "description": "Proyecto Valcopy 2DAW",
     "type": "project",
     "license": "license preferred by the community",
     "authors": [
         {
-            "name": "inkbyte",
-            "email": "inkbytedaw@gmail.com"
+            "name": "Valcopy",
+            "email": "valcopySL@gmail.com"
         }
     ],
     "minimum-stability": "stable",
