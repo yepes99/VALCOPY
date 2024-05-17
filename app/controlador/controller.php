@@ -721,6 +721,27 @@ public function gestionUsuarios(){
 }
 
 
+public function contactanos(){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bAceptar'])) {
+        $nombre = $_POST['nombre'];
+        $email = $_POST['email'];
+        $mensaje = $_POST['mensaje'];
+
+        if (!empty($nombre) && !empty($email) && !empty($mensaje)) {
+            $consultas = new Consultas($conn);
+            if ($consultas->insertarMensaje($nombre, $email, $mensaje)) {
+                $mensaje_exito = "Tu mensaje ha sido enviado con éxito.";
+            } else {
+                $mensaje_error = "Error al enviar el mensaje. Por favor, intenta nuevamente.";
+            }
+        } else {
+            $mensaje_error = "Todos los campos son obligatorios.";
+        }
+    }
+
+    include __DIR__ . '/../../web/templates/contactanos.php';
+}
+
 
 
 

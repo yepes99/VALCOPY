@@ -52,6 +52,7 @@ $map = array(
     'verPedidosPorCliente' => array('controller' => 'Controller', 'action' => 'verPedidosPorCliente', 'nivel' => 0),
     'gestionUsuarios' => array('controller' => 'Controller', 'action' => 'gestionUsuarios', 'nivel' => 0),
     'agregarUsuario' => array('controller' => 'Controller', 'action' => 'gestionUsuarios', 'nivel' => 0),
+    'contactanos' => array('controller' => 'Controller', 'action' => 'contactanos', 'nivel' => 0),
  
  
 );

@@ -54,6 +54,9 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                     <a class="nav-link" href="index.php?ctl=gestionUsuarios">Gestión de Usuarios</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="index.php?ctl=gestionUsuarios">Gestión de Mensajes</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="index.php?ctl=inicio">Volver Web</a>
                 </li>
                 <li class="nav-item">
@@ -82,7 +85,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                         <li><a class="nav-link" href="index.php?ctl=visualizarProductos">Productos</a></li>
                         <li><a class="nav-link" href="about.html">Sobre Nosotros</a></li>
                         <li><a class="nav-link" href="services.html">Servicios</a></li>
-                        <li><a class="nav-link" href="blog.html">Contáctanos</a></li>
+                        <li><a class="nav-link" href="index.php?ctl=contactanos">Contáctanos</a></li>
                     
                     </ul>
 

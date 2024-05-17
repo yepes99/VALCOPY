@@ -541,6 +541,19 @@ public function listarTodosLosUsuarios(){
 }
 
 
-
+public function insertarMensaje($nombre, $email, $mensaje) {
+    try {
+        $sql = "INSERT INTO mensajes2 (nombre, email, mensaje) VALUES (:nombre, :email, :mensaje)";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':mensaje', $mensaje, PDO::PARAM_STR);
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        echo "Error al insertar el mensaje: " . $e->getMessage();
+        return false;
+    }
+}
 
 }
