@@ -728,7 +728,7 @@ public function contactanos(){
         $mensaje = $_POST['mensaje'];
 
         if (!empty($nombre) && !empty($email) && !empty($mensaje)) {
-            $consultas = new Consultas($conn);
+            $consultas = new Consultas();
             if ($consultas->insertarMensaje($nombre, $email, $mensaje)) {
                 $mensaje_exito = "Tu mensaje ha sido enviado con éxito.";
             } else {
@@ -741,7 +741,39 @@ public function contactanos(){
 
     include __DIR__ . '/../../web/templates/contactanos.php';
 }
+function responder() {
+    if (isset($_GET['id'])) {
+        $idMensaje = $_GET['id'];
+        $consultas = new Consultas();
+        $mensaje = $consultas->obtenerMensajePorId($idMensaje); // Método para obtener un mensaje por su ID
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bEnviar'])) {
+            $respuesta = $_POST['respuesta'];
+            if (!empty($respuesta)) {
+                // Insertar respuesta en la base de datos
+                if ($consultas->insertarRespuesta($idMensaje, $respuesta)) {
+                    $mensaje_exito = "Respuesta enviada correctamente.";
+                } else {
+                    $mensaje_error = "Error al enviar la respuesta.";
+                }
+            } else {
+                $mensaje_error = "Por favor, escribe una respuesta.";
+            }
+        }
+
+        include __DIR__ . '/../../web/templates/responder.php'; // Vista para responder al mensaje
+    } else {
+        // Manejo de error si no se proporciona ID válido
+        echo "ID de mensaje no válido.";
+    }
+}
+
+function verMensajes() {
+    $consultas = new Consultas();
+    $mensajes = $consultas->obtenerMensajes(); // Método para obtener todos los mensajes
+
+    include __DIR__ . '/../../web/templates/ver_mensajes.php'; // Vista para mostrar los mensajes
+}
 
 
 

@@ -556,4 +556,40 @@ public function insertarMensaje($nombre, $email, $mensaje) {
     }
 }
 
+public function obtenerMensajes() {
+    try {
+        $sql = "SELECT * FROM mensajes2";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener mensajes: " . $e->getMessage();
+        return [];
+    }
+}
+public function obtenerMensajePorId($id) {
+    try {
+        $sql = "SELECT * FROM mensajes2 WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener mensaje por ID: " . $e->getMessage();
+        return null;
+    }
+}
+public function insertarRespuesta($idMensaje, $respuesta) {
+    try {
+        $sql = "INSERT INTO respuesta2 (id_mensaje, respuesta) VALUES (:id_mensaje, :respuesta)";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id_mensaje', $idMensaje, PDO::PARAM_INT);
+        $stmt->bindParam(':respuesta', $respuesta, PDO::PARAM_STR);
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        echo "Error PDO al insertar respuesta: " . $e->getMessage();
+    } 
+}
+
 }

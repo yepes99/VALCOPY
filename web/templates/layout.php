@@ -54,7 +54,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                     <a class="nav-link" href="index.php?ctl=gestionUsuarios">Gestión de Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?ctl=gestionUsuarios">Gestión de Mensajes</a>
+                    <a class="nav-link" href="index.php?ctl=verMensajes">Gestión de Mensajes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="index.php?ctl=inicio">Volver Web</a>
