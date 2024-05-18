@@ -99,7 +99,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="index.php?ctl=registro">Registro</a></li>
-                   
+                        <li><a class="dropdown-item" href="index.php?ctl=perfilUsuario">Perfil usuario</a></li>
                         <li><a class="dropdown-item" href="index.php?ctl=verPerfil">Ajustes</a></li>
                     </ul>
                 </li>
