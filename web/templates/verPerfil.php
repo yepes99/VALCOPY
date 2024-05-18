@@ -39,7 +39,7 @@ if (isset($_SESSION['id_usuario'])) {
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form action="index.php?ctl=verPerfil" method="POST">
+            <form action="index.php?ctl=verPerfil" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="inputUsername" class="form-label">Nombre de Usuario:</label>
                     <input type="text" id="inputUsername" name="user" class="form-control" value="<?php echo $user; ?>">
@@ -85,6 +85,13 @@ if (isset($_SESSION['id_usuario'])) {
                     <input type="text" id="inputPostalCode" name="codigo_postal" class="form-control" value="<?php echo $codigo_postal; ?>">
                 </div>
 
+                <div class="mb-3">
+                    <label for="inputProfilePicture" class="form-label">Foto de Perfil:</label>
+                    <input type="file" id="inputProfilePicture" name="foto_perfil" class="form-control">
+                    <?php if (!empty($foto_perfil)): ?>
+                        <img src="path_to_uploads/<?php echo htmlspecialchars($foto_perfil); ?>" alt="Foto de Perfil Actual" class="img-thumbnail mt-2">
+                    <?php endif; ?>
+                </div>
              
 
                 <div class="d-grid">

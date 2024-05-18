@@ -368,80 +368,80 @@ public function cerrarSesion()
 
 public function verPerfil()
 {
-    // Verificar si hay una sesión iniciada y obtener el ID de usuario
-    if(isset($_SESSION['id_usuario'])){
-        // Obtener el ID del usuario de la sesión
-        $id_usuario = $_SESSION['id_usuario'];
-        
-        // Crear una instancia de la clase Consultas
-        $consultas = new Consultas();
-        
-        // Obtener los datos del usuario desde la base de datos
-        $usuario = $consultas->obtenerUsuarioPorId($id_usuario);
+   // Verificar si hay una sesión iniciada y obtener el ID de usuario
+   if (isset($_SESSION['id_usuario'])) {
+    $id_usuario = $_SESSION['id_usuario'];
+    
+    // Crear una instancia de la clase Consultas
+    $consultas = new Consultas();
+    
+    // Obtener los datos del usuario desde la base de datos
+    $usuario = $consultas->obtenerUsuarioPorId($id_usuario);
 
-        // Verificar si se encontró al usuario
-        if ($usuario) {
-            // Verificar si se envió el formulario de actualización
-            if(isset($_POST['bAceptar'])){
-                // Recoger los datos del formulario
-                $nombre = $_POST["nombre"];
-                $apellidos = $_POST["apellidos"];
-                $telefono = $_POST["telefono"];
-                $ciudad = $_POST["ciudad"];
-                $pais = $_POST["pais"];
-                $email = $_POST["email"];
-                $direccion = $_POST["direccion"];
-                $codigo_postal = $_POST["codigo_postal"];
-            
-                
-                // Crear un array para almacenar los datos actualizados
-                $datos_actualizados = array(
-                    'nombre' => $nombre,
-                    'apellidos' => $apellidos,
-                    'telefono' => $telefono,
-                    'ciudad' => $ciudad,
-                    'pais' => $pais,
-                    'email' => $email,
-                    'direccion' => $direccion,
-                    'codigo_postal' => $codigo_postal
-                  
-                );
-                
-                if($consultas->actualizarPerfil($id_usuario, $datos_actualizados)){
-                    // Redireccionar a la página de perfil del usuario con un mensaje de éxito
-                    header("Location: index.php?ctl=perfilUsuario");
-                    exit;
-                } else {
-                    // Redireccionar a la página de perfil con un mensaje de error
-                   echo "error";
-                }
-                
+    // Verificar si se encontró al usuario
+    if ($usuario) {
+        // Verificar si se envió el formulario de actualización
+        if (isset($_POST['bAceptar'])) {
+            // Recoger los datos del formulario
+            $nombre = $_POST["nombre"];
+            $apellidos = $_POST["apellidos"];
+            $telefono = $_POST["telefono"];
+            $ciudad = $_POST["ciudad"];
+            $pais = $_POST["pais"];
+            $email = $_POST["email"];
+            $direccion = $_POST["direccion"];
+            $codigo_postal = $_POST["codigo_postal"];
+            $foto_perfil = $_FILES["foto_perfil"];
+
+            // Crear un array para almacenar los datos actualizados
+            $datos_actualizados = [
+                'nombre' => $nombre,
+                'apellidos' => $apellidos,
+                'telefono' => $telefono,
+                'ciudad' => $ciudad,
+                'pais' => $pais,
+                'email' => $email,
+                'direccion' => $direccion,
+                'codigo_postal' => $codigo_postal,
+                'foto_perfil'=> $foto_perfil
+               
+            ];
+
+            // Actualizar perfil, incluyendo la foto de perfil
+            if ($consultas->actualizarPerfil($id_usuario, $datos_actualizados,$foto_perfil)) {
+                // Redireccionar a la página de perfil del usuario con un mensaje de éxito
+                header("Location: index.php?ctl=perfilUsuario");
+                exit;
+            } else {
+                // Mostrar un mensaje de error si no se pudo actualizar
+                echo "Error al actualizar el perfil.";
             }
-            
-            // Extraer los datos del usuario
-            $nombre = $usuario['nombre'];
-            $apellidos = $usuario['apellidos'];
-            $telefono = $usuario['telefono'];
-            $ciudad = $usuario['ciudad'];
-            $pais = $usuario['pais'];
-            $email = $usuario['email'];
-            $password = $usuario['password'];
-            $direccion = $usuario['direccion'];
-            $codigo_postal = $usuario['codigo_postal'];
-            $tipo_usuario = $usuario['tipo_usuario'];
-            
-            // Incluir el archivo de la vista verPerfil.php y pasar los datos del usuario a la misma
-            include __DIR__ . '/../../web/templates/verPerfil.php';
-        } else {
-            // Mostrar un mensaje de error si no se encontró al usuario
-            echo "Error: Usuario no encontrado.";
         }
+
+        // Extraer los datos del usuario
+        $nombre = $usuario['nombre'];
+        $apellidos = $usuario['apellidos'];
+        $telefono = $usuario['telefono'];
+        $ciudad = $usuario['ciudad'];
+        $pais = $usuario['pais'];
+        $email = $usuario['email'];
+        $password = $usuario['password'];
+        $direccion = $usuario['direccion'];
+        $codigo_postal = $usuario['codigo_postal'];
+        $tipo_usuario = $usuario['tipo_usuario'];
+        $foto_perfil = $usuario['foto_perfil'];
+
+        // Incluir el archivo de la vista verPerfil.php y pasar los datos del usuario a la misma
+        include __DIR__ . '/../../web/templates/verPerfil.php';
     } else {
-        // Si no hay una sesión iniciada, redirigir al usuario a la página de inicio de sesión
-        header("Location: index.php?ctl=inicioSesion");
-        exit;
+        echo "Error: Usuario no encontrado.";
     }
+} else {
+    header("Location: index.php?ctl=inicioSesion");
+    exit;
 }
+}
+
 
 public function perfilUsuario(){
      // Verificar si hay una sesión iniciada y obtener el ID de usuario

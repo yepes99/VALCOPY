@@ -317,22 +317,72 @@ public function obtenerProductosEnCesta($id_usuario) {
 }
 
 
-public function actualizarPerfil($id_usuario, $datos_actualizados) {
+public function actualizarPerfil($id_usuario, $datos_actualizados, $foto_perfil)
+{
     try {
-        // Construir la consulta SQL para actualizar el perfil del usuario
-        $sql = "UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, telefono = :telefono, ciudad = :ciudad, pais = :pais, email = :email, direccion = :direccion, codigo_postal = :codigo_postal WHERE id_usuario = :id_usuario";
+        // Variables para la foto de perfil
+        $foto_perfil_nombre = '';
 
-        
+        // Verificar si se subió una nueva foto de perfil
+        if (!empty($foto_perfil) && $foto_perfil['error'] === 0) {
+            $foto_perfil_nombre = $foto_perfil['name'];
+
+            // Directorio donde se almacenarán las fotos de perfil
+            $directorio_destino = __DIR__ . '/../../app/archivos/img/usuario/';
+            $ruta_destino = $directorio_destino . $foto_perfil_nombre;
+
+            // Mover la foto a la carpeta de destino
+            move_uploaded_file($foto_perfil['tmp_name'], $ruta_destino);
+        }
+
+        // Construir la consulta SQL para actualizar el perfil del usuario
+        $sql = "UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, telefono = :telefono, ciudad = :ciudad, pais = :pais, email = :email, direccion = :direccion, codigo_postal = :codigo_postal";
+
+        // Agregar la actualización de la foto de perfil solo si se subió una nueva
+        if (!empty($foto_perfil_nombre)) {
+            $sql .= ", foto_perfil = :foto_perfil";
+        }
+
+        $sql .= " WHERE id_usuario = :id_usuario";
+
         // Preparar la consulta
         $stmt = $this->conexion->prepare($sql);
-        
-        // Ejecutar la consulta con los valores proporcionados
-        return $stmt->execute(array_merge($datos_actualizados, ['id_usuario' => $id_usuario]));
+
+        // Bind de los parámetros
+        $stmt->bindParam(':nombre', $datos_actualizados['nombre'], PDO::PARAM_STR);
+        $stmt->bindParam(':apellidos', $datos_actualizados['apellidos'], PDO::PARAM_STR);
+        $stmt->bindParam(':telefono', $datos_actualizados['telefono'], PDO::PARAM_STR);
+        $stmt->bindParam(':ciudad', $datos_actualizados['ciudad'], PDO::PARAM_STR);
+        $stmt->bindParam(':pais', $datos_actualizados['pais'], PDO::PARAM_STR);
+        $stmt->bindParam(':email', $datos_actualizados['email'], PDO::PARAM_STR);
+        $stmt->bindParam(':direccion', $datos_actualizados['direccion'], PDO::PARAM_STR);
+        $stmt->bindParam(':codigo_postal', $datos_actualizados['codigo_postal'], PDO::PARAM_STR);
+
+        // Bind del nombre de la foto de perfil si se subió una nueva
+        if (!empty($foto_perfil_nombre)) {
+            $stmt->bindParam(':foto_perfil', $foto_perfil_nombre, PDO::PARAM_STR);
+        }
+
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+
+        // Ejecutar la consulta
+        $resultado = $stmt->execute();
+
+        // Verificar el éxito de la ejecución y actualizar correctamente la foto de perfil
+        if ($resultado && !empty($foto_perfil_nombre)) {
+            // Actualizar el nombre de la foto de perfil en la sesión o en el array de datos actualizados si es necesario
+            $_SESSION['foto_perfil'] = $foto_perfil_nombre; // Actualiza la sesión si es necesario
+            $datos_actualizados['foto_perfil'] = $foto_perfil_nombre; // Actualiza el array de datos actualizados si es necesario
+        }
+
+        return $resultado;
     } catch (PDOException $e) {
         echo "Error al actualizar perfil: " . $e->getMessage();
         return false; // Indicar que hubo un error al actualizar el perfil
     }
 }
+
+
 
 
 public function registrarPedido($id_usuario, $total) {
