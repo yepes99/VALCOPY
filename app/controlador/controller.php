@@ -443,43 +443,38 @@ public function verPerfil()
 }
 
 
-public function perfilUsuario(){
-     // Verificar si hay una sesión iniciada y obtener el ID de usuario
-     if (isset($_SESSION['id_usuario'])) {
-        // Obtener el ID del usuario de la sesión
-        $id_usuario = $_SESSION['id_usuario'];
+public function perfilUsuario() {
+   // Obtener los datos del usuario con la foto de perfil
+   $consultas = new Consultas();
+   $id_usuario = $_SESSION['id_usuario'];
+    $usuario = $consultas->obtenerUsuarioConFotoPorId($id_usuario);
 
-        // Obtener los datos del usuario desde la base de datos
-        $consultas=new Consultas();
-        $usuario = $consultas->obtenerUsuarioPorId($id_usuario);
+// Verificar si se encontró al usuario
+if ($usuario) {
+    // Asignar los datos del usuario para ser mostrados en la vista
+    $nombre = htmlspecialchars($usuario['nombre']);
+    $apellidos = htmlspecialchars($usuario['apellidos']);
+    $telefono = htmlspecialchars($usuario['telefono']);
+    $ciudad = htmlspecialchars($usuario['ciudad']);
+    $pais = htmlspecialchars($usuario['pais']);
+    $email = htmlspecialchars($usuario['email']);
+    $direccion = htmlspecialchars($usuario['direccion']);
+    $codigo_postal = htmlspecialchars($usuario['codigo_postal']);
+    $tipo_usuario = htmlspecialchars($usuario['tipo_usuario']);
+    $fecha_alta = htmlspecialchars($usuario['fecha_alta']);
 
-        // Verificar si se encontró al usuario
-        if ($usuario) {
-            // Extraer los datos del usuario
-            $nombre = $usuario['nombre'];
-            $apellidos = $usuario['apellidos'];
-            $telefono = $usuario['telefono'];
-            $ciudad = $usuario['ciudad'];
-            $pais = $usuario['pais'];
-            $email = $usuario['email'];
-            $direccion = $usuario['direccion'];
-            $codigo_postal = $usuario['codigo_postal'];
-            $tipo_usuario = $usuario['tipo_usuario'];
-            $fecha_alta = $usuario['fecha_alta']; // Assuming this field exists in your database
+    // Construir la ruta de la foto de perfil
+    $ruta_foto_perfil = '/archivos/img/usuario/' . htmlspecialchars($usuario['foto_perfil']);
 
-          
-        } else {
-            // Mostrar un mensaje de error si no se encontró al usuario
-            echo "Error: Usuario no encontrado.";
-        }
-    } else {
-        // Si no hay una sesión iniciada, redirigir al usuario a la página de inicio de sesión
-        header("Location: index.php?ctl=inicioSesion");
-        exit;
-    }
-
+    // Incluir el archivo de la vista perfil_usuario.php y pasar los datos del usuario a la misma
     include __DIR__ . '/../../web/templates/perfil_usuario.php';
+} else {
+    echo "Error: Usuario no encontrado.";
 }
+
+}
+
+
 
 
 

@@ -642,4 +642,31 @@ public function insertarRespuesta($idMensaje, $respuesta) {
     } 
 }
 
+public function obtenerUsuarioConFotoPorId($id_usuario) {
+    try {
+        // Construir la consulta SQL para obtener el usuario con la foto de perfil
+        $sql = "SELECT id_usuario, user, nombre, apellidos, telefono, ciudad, pais, email, direccion, codigo_postal, tipo_usuario, fecha_alta, foto_perfil FROM usuarios WHERE id_usuario = :id_usuario";
+
+        // Preparar la consulta
+        $stmt = $this->conexion->prepare($sql);
+
+        // Bind de parámetros
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener los resultados como un array asociativo
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Retornar los datos del usuario con la foto de perfil
+        return $usuario;
+
+    } catch (PDOException $e) {
+        echo "Error al obtener usuario con foto de perfil: " . $e->getMessage();
+        return false; // Indicar que hubo un error al obtener el usuario
+    }
+}
+
+
 }
