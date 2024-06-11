@@ -23,8 +23,10 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
     <link rel="stylesheet" href="../web/styles/styles.css" />
+
    
 
 
@@ -83,8 +85,6 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                             <a class="nav-link" href="index.php?ctl=inicio">Home</a>
                         </li>
                         <li><a class="nav-link" href="index.php?ctl=visualizarProductos">Productos</a></li>
-                        <li><a class="nav-link" href="about.html">Sobre Nosotros</a></li>
-                        <li><a class="nav-link" href="services.html">Servicios</a></li>
                         <li><a class="nav-link" href="index.php?ctl=contactanos">Contáctanos</a></li>
                     
                     </ul>
@@ -92,7 +92,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                     <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class=" bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                         </svg>
@@ -104,7 +104,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'administr
                     </ul>
                 </li>
                         <li><a class="nav-link" href="index.php?ctl=verCesta2" dir="ltr">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class=" bi-cart" viewBox="0 0 16 16">
                                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
                                 </svg></a>
                         </li>

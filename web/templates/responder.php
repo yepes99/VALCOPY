@@ -25,6 +25,6 @@
             <label for="respuesta">Respuesta:</label>
             <textarea class="form-control" id="respuesta" name="respuesta" rows="5" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" name="bEnviar">Enviar Respuesta</button>
+        <button type="submit" class="btn btn-primary mt-3" name="bEnviar">Enviar Respuesta</button>
     </form>
 </div>

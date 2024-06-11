@@ -76,24 +76,30 @@ public function insertarProducto($nombre, $descripcion, $categoria, $precio, $di
         }
     }
 
-    public function obtenerCategorias()
-    {
+    public function obtenerCategorias() {
         try {
-            // Preparar la consulta SQL para obtener todas las categorías
-            $stmt = $this->conexion->prepare("SELECT id_categoria, nombre FROM categorias");
-
-            // Ejecutar la consulta
+            $stmt = $this->conexion->prepare("SELECT * FROM categorias");
             $stmt->execute();
-
-            // Obtener y devolver todas las filas de resultado como un array asociativo
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            // Manejar cualquier error en la consulta
             echo "Error al obtener categorías: " . $e->getMessage();
-            return []; // Devolver un array vacío en caso de error
+            return [];
         }
     }
 
+    // Método para obtener productos por categoría
+    public function obtenerProductosPorCategoria($id_categoria) {
+        try {
+            $stmt = $this->conexion->prepare("SELECT * FROM productos WHERE categoria = ?");
+            $stmt->execute([$id_categoria]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error al obtener productos: " . $e->getMessage();
+            return [];
+        }
+    }
+    
+    
     public function actualizarProducto($id_producto, $nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen)
     {
         try {
@@ -143,26 +149,6 @@ public function obtenerProductos()
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Error al obtener productos: " . $e->getMessage();
-        return false; // Indicar que hubo un error en la consulta
-    }
-}
-public function obtenerProductosPorCategoria($categoria)
-{
-    try {
-        // Preparar la consulta SQL para obtener productos por categoría
-        $stmt = $this->conexion->prepare("SELECT * FROM productos WHERE categoria = :categoria");
-
-        // Vincular el parámetro de categoría
-        $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT);
-
-        // Ejecutar la consulta
-        $stmt->execute();
-
-        // Obtener y devolver los productos filtrados por categoría como un array asociativo
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        // Manejar errores de base de datos
-        echo "Error al obtener productos por categoría: " . $e->getMessage();
         return false; // Indicar que hubo un error en la consulta
     }
 }
@@ -669,4 +655,70 @@ public function obtenerUsuarioConFotoPorId($id_usuario) {
 }
 
 
+public function obtenerUsuarioPorEmail($email) {
+    $query = "SELECT * FROM usuarios WHERE email = ?";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->execute([$email]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+public function obtenerMensajesYRespuestasPorEmail($email) {
+    $query = "SELECT m.id, m.mensaje, m.fecha, r.respuesta
+              FROM mensajes2 m
+              LEFT JOIN respuestas2 r ON m.id = r.id_mensaje
+              WHERE m.email = ?";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->execute([$email]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+public function obtenerRespuestasPorIdMensaje($id_mensaje) {
+    $query = "SELECT * FROM respuesta2 WHERE id_mensaje = ?";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->execute([$id_mensaje]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+public function obtenerEmailPorIdUsuario($id_usuario) {
+    $query = "SELECT email FROM usuarios WHERE id_usuario = ?";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->execute([$id_usuario]);
+    $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $resultado['email'] ?? null;
+}
+public function obtenerMensajesPorUsuarioEmail($email) {
+    $query = "SELECT * FROM mensajes2 WHERE email = ?";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->execute([$email]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Método para obtener productos de la cesta por ID de usuario
+public function obtenerProductosCestaPorUsuario($id_usuario) {
+    try {
+        // Consulta SQL ajustada para obtener los productos de la cesta del usuario
+        $sql = "SELECT p.nombre, p.precio, c.cantidad
+                FROM cesta c
+                INNER JOIN productos p ON c.id_producto = p.id_producto
+                WHERE c.id_usuario = :id_usuario";
+
+        // Preparar la consulta
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener los resultados como un array asociativo
+        $productos_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Devolver el resultado
+        return $productos_comprados;
+
+    } catch (PDOException $e) {
+        // Manejo de errores - puedes personalizar esto según tus necesidades
+        echo "Error al obtener productos de la cesta: " . $e->getMessage();
+        return false;
+    }
+}
+
+}
+
+

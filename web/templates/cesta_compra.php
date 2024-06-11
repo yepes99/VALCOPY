@@ -22,18 +22,7 @@ include('./templates/layout.php');
                             <tr>
                                 <td><?php echo $producto['nombre']; ?></td>
                                 <td>$<?php echo number_format($producto['precio'], 2); ?></td>
-                                <td>
-                                    <!-- Botones de aumento y disminución de cantidad -->
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-outline-secondary btn-minus" type="button" data-product-id="<?php echo $producto['id_producto']; ?>">-</button>
-                                        </div>
-                                        <input type="text" class="form-control text-center quantity" value="<?php echo $producto['cantidad']; ?>" readonly>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary btn-plus" type="button" data-product-id="<?php echo $producto['id_producto']; ?>">+</button>
-                                        </div>
-                                    </div>
-                                </td>
+                                <td><?php echo $producto['cantidad']; ?></td>
                                 <td class="product-total" data-price="<?php echo $producto['precio']; ?>">
                                     $<?php echo number_format($producto['precio'] * $producto['cantidad'], 2); ?>
                                 </td>
@@ -113,5 +102,19 @@ include('./templates/layout.php');
 
         // Guardar el PDF
         doc.save('factura.pdf');
+    });
+
+    // Función para eliminar un producto de la cesta
+    document.addEventListener('DOMContentLoaded', function() {
+        var btnRemove = document.querySelectorAll('.btn-remove');
+        btnRemove.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var productId = this.getAttribute('data-product-id');
+                // Aquí puedes agregar código para enviar una solicitud AJAX para eliminar el producto de la base de datos o actualizar la sesión de la cesta
+                // Aquí por simplicidad, se puede eliminar la fila del producto de la tabla directamente en el DOM
+                var tr = this.closest('tr');
+                tr.parentNode.removeChild(tr);
+            });
+        });
     });
 </script>

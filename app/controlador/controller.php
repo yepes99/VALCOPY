@@ -112,7 +112,7 @@ class Controller
     {
         // Verificar si se envió el formulario
         if (isset($_POST["bAceptar"])) {
-            // Recoger los datos del formulario
+            // Recoger los datos del formularno
             $nombre = $_POST["nombre"];
             $descripcion = $_POST["descripcion"];
             $categoria = $_POST["categoria"];
@@ -122,7 +122,7 @@ class Controller
             $imagen = $_FILES["imagen"]; // Recoger la imagen del formulario
             
             // Directorio donde se almacenarán las imágenes de productos
-            $directorio_destino = __DIR__ . '/../../app/archivos/img/productos_imagenes/';
+            $directorio_destino ='../app/archivos/img/productos_imagenes/';
             
             // Comprobar si se subió la imagen correctamente
             if ($imagen['error'] === UPLOAD_ERR_OK) {
@@ -137,7 +137,7 @@ class Controller
                     $consulta = new Consultas();
     
                     // Insertar el producto en la base de datos
-                    $exito = $consulta->insertarProducto($nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $ruta_destino);
+                    $exito = $consulta->insertarProducto($nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $nombre_imagen);
     
                     // Verificar si la inserción fue exitosa
                     if ($exito) {
@@ -489,24 +489,26 @@ public function visualizarProductos(){
 
  
 public function producto(){
-    // Crear una instancia de la clase Consultas
+   
     $consultas = new Consultas();
 
 
     include __DIR__ . '/../../web/templates/producto.php';
 }
 
-public function verCesta(){
-    // Verificar si se pasa el ID del producto como parámetro
-    if(isset($_GET['id_producto'])){
-        // Obtener el ID del producto de la URL
+public function verCesta() {
+    $mensaje = '';
+    $tipo_mensaje = '';
+
+    if (isset($_GET['id_producto'])) {
+       
         $id_producto = $_GET['id_producto'];
         
-        // Crear una instancia de la clase Consultas
+     
         $consultas = new Consultas();
         
-        // Insertar el producto en la cesta
-        if(empty($_SESSION['id_usuario'])){
+    
+        if (empty($_SESSION['id_usuario'])) {
             header("Location: index.php?ctl=inicioSesion");
             exit;
         } else {
@@ -514,16 +516,22 @@ public function verCesta(){
         }
        
         $cantidad = 1; // Cantidad por defecto
-        if($consultas->agregarProductoACesta($id_usuario, $id_producto, $cantidad)) {
-            echo "Producto agregado a la cesta correctamente.";
+        if ($consultas->agregarProductoACesta($id_usuario, $id_producto, $cantidad)) {
+            $mensaje = 'Producto agregado a la cesta correctamente.';
+            $tipo_mensaje = 'success';
         } else {
-            echo "Error al agregar el producto a la cesta.";
+            $mensaje = 'Error al agregar el producto a la cesta.';
+            $tipo_mensaje = 'danger';
         }
     } else {
         // Manejar el caso en que no se pase el ID del producto como parámetro
         echo "ID del producto no especificado.";
     }
+
+    // Incluir la plantilla y pasar los mensajes como variables
+    include('./templates/producto_cliente.php');
 }
+
 
 public function verCesta2(){
     // Verificar si hay una sesión iniciada y obtener el ID de usuario

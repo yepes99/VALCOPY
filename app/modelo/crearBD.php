@@ -11,10 +11,7 @@
 //En config.php tenemos los valores de conexión a la BD
 include ('../libs/config.php');
 try {
-    /*
-     * Conectamos
-     * No le pasamos nombre de BD porque vamos a crearla
-     */
+   
     echo ("1");
     $pdo = new PDO('mysql:host='.Config::$db_hostname, Config::$db_usuario, Config::$db_clave);
     echo ("2");
