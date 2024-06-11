@@ -25,6 +25,6 @@
             <label for="mensaje">Mensaje:</label>
             <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" name="bAceptar">Enviar</button>
+        <button type="submit" class="btn btn-primary mt-2" name="bAceptar">Enviar</button>
     </form>
 </div>

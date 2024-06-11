@@ -37,26 +37,26 @@ public function insertarUsuario($params)
             $params['foto_perfil']
         ]);
 
-        return true; // Indicar que la inserción fue exitosa
+        return true; 
     } catch (PDOException $e) {
         echo "Error al insertar usuario: " . $e->getMessage();
-        return false; // Indicar que hubo un error en la inserción
+        return false; 
     }
 }
 
 public function insertarProducto($nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen)
     {
         try {
-            // Preparar la consulta SQL para insertar un nuevo producto
+        
             $stmt = $this->conexion->prepare("INSERT INTO productos (nombre, descripcion, categoria, precio, disponibilidad, medidas, imagen) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-            // Enlazar parámetros y ejecutar la consulta
+         
             $stmt->execute([$nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen]);
 
-            return true; // Indicar que la inserción fue exitosa
+            return true; 
         } catch (PDOException $e) {
             echo "Error al insertar producto: " . $e->getMessage();
-            return false; // Indicar que hubo un error en la inserción
+            return false; 
         }
     }
 
@@ -103,10 +103,10 @@ public function insertarProducto($nombre, $descripcion, $categoria, $precio, $di
     public function actualizarProducto($id_producto, $nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen)
     {
         try {
-            // Preparar la consulta SQL para actualizar un producto existente
+           
             $stmt = $this->conexion->prepare("UPDATE productos SET nombre = ?, descripcion = ?, categoria = ?, precio = ?, disponibilidad = ?, medidas = ?, imagen = ? WHERE id_producto = ?");
     
-            // Enlazar parámetros y ejecutar la consulta
+       
             $stmt->execute([$nombre, $descripcion, $categoria, $precio, $disponibilidad, $medidas, $imagen, $id_producto]);
     
             // Verificar si se actualizó al menos una fila
@@ -117,39 +117,39 @@ public function insertarProducto($nombre, $descripcion, $categoria, $precio, $di
             }
         } catch (PDOException $e) {
             echo "Error al actualizar el producto: " . $e->getMessage();
-            return false; // Indicar que hubo un error en la actualización
+            return false; 
         }
     }
     
     public function borrarProducto($id_producto)
 {
     try {
-        // Preparar la consulta SQL para borrar el producto
+      
         $stmt = $this->conexion->prepare("DELETE FROM productos WHERE id_producto = ?");
 
-        // Enlazar parámetros y ejecutar la consulta
+    
         $stmt->execute([$id_producto]);
 
-        return true; // Indicar que el borrado fue exitoso
+        return true; 
     } catch (PDOException $e) {
         echo "Error al borrar el producto: " . $e->getMessage();
-        return false; // Indicar que hubo un error en el borrado
+        return false; 
     }
 }
 public function obtenerProductos()
 {
     try {
-        // Preparar la consulta SQL para obtener todos los productos
+    
         $stmt = $this->conexion->prepare("SELECT * FROM productos");
 
-        // Ejecutar la consulta
+      
         $stmt->execute();
 
-        // Obtener y devolver todos los productos como un array asociativo
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Error al obtener productos: " . $e->getMessage();
-        return false; // Indicar que hubo un error en la consulta
+        return false; 
     }
 }
 
@@ -163,32 +163,32 @@ public function obtenerUsuarioPorId($id_usuario)
         // Enlazar parámetro y ejecutar la consulta
         $stmt->execute([$id_usuario]);
 
-        // Obtener y devolver el usuario como un array asociativo
+      
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Error al obtener usuario por ID: " . $e->getMessage();
-        return false; // Indicar que hubo un error en la consulta
+        return false; 
     }
 }
 
 public function obtenerProductoPorId($id_producto)
 {
     try {
-        // Preparar la consulta SQL para obtener un producto por su ID
+       
         $stmt = $this->conexion->prepare("SELECT * FROM productos WHERE id_producto = :id");
 
-        // Vincular el parámetro de ID del producto
+      
         $stmt->bindParam(":id", $id_producto, PDO::PARAM_INT);
 
-        // Ejecutar la consulta
+
         $stmt->execute();
 
-        // Obtener y devolver el producto como un array asociativo
+      
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         // Manejar cualquier error de consulta
         echo "Error al obtener el producto: " . $e->getMessage();
-        return false; // Indicar que hubo un error en la consulta
+        return false; 
     }
 }
 
@@ -196,7 +196,7 @@ public function obtenerProductoPorId($id_producto)
 public function actualizarCantidadEnCesta($id_usuario, $id_producto, $cantidad)
 {
     try {
-        // Verificar si el producto está en la cesta del usuario
+       
         $stmt = $this->conexion->prepare("SELECT * FROM cesta WHERE id_usuario = ? AND id_producto = ?");
         $stmt->execute([$id_usuario, $id_producto]);
         $producto = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -205,13 +205,13 @@ public function actualizarCantidadEnCesta($id_usuario, $id_producto, $cantidad)
             // Actualizar la cantidad del producto en la cesta
             $stmt = $this->conexion->prepare("UPDATE cesta SET cantidad = ? WHERE id_usuario = ? AND id_producto = ?");
             $stmt->execute([$cantidad, $id_usuario, $id_producto]);
-            return true; // Indicar que la operación fue exitosa
+            return true; 
         } else {
-            return false; // Indicar que el producto no está en la cesta
+            return false; 
         }
     } catch (PDOException $e) {
         echo "Error al actualizar cantidad en la cesta: " . $e->getMessage();
-        return false; // Indicar que hubo un error en la operación
+        return false; 
     }
 }
 
@@ -221,10 +221,10 @@ public function eliminarProductoDeCesta($id_usuario, $id_producto)
             // Eliminar el producto de la cesta del usuario
             $stmt = $this->conexion->prepare("DELETE FROM cesta WHERE id_usuario = ? AND id_producto = ?");
             $stmt->execute([$id_usuario, $id_producto]);
-            return true; // Indicar que la operación fue exitosa
+            return true; 
         } catch (PDOException $e) {
             echo "Error al eliminar producto de la cesta: " . $e->getMessage();
-            return false; // Indicar que hubo un error en la operación
+            return false;
         }
     }
        // Función para vaciar la cesta por completo
@@ -237,7 +237,7 @@ public function eliminarProductoDeCesta($id_usuario, $id_producto)
                return true; // Indicar que la operación fue exitosa
            } catch (PDOException $e) {
                echo "Error al vaciar la cesta: " . $e->getMessage();
-               return false; // Indicar que hubo un error en la operación
+               return false; 
            }
        }
 
@@ -252,11 +252,11 @@ public function eliminarProductoDeCesta($id_usuario, $id_producto)
         // Ejecutar la consulta
         $stmt->execute([$id_usuario]);
 
-        // Obtener y devolver los productos en la cesta como un array asociativo
+       
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Error al obtener productos en la cesta: " . $e->getMessage();
-        return []; // Devolver un array vacío en caso de error
+        return []; 
     }
 }
 
@@ -264,13 +264,13 @@ public function eliminarProductoDeCesta($id_usuario, $id_producto)
 public function agregarProductoACesta($id_usuario, $id_producto, $cantidad)
 {
     try {
-        // Verificar si el producto ya está en la cesta del usuario
+        
         $stmt = $this->conexion->prepare("SELECT * FROM cesta WHERE id_usuario = ? AND id_producto = ?");
         $stmt->execute([$id_usuario, $id_producto]);
         $producto = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($producto) {
-            // Si el producto ya está en la cesta, actualizar la cantidad
+          
             $cantidad += $producto['cantidad'];
             $stmt = $this->conexion->prepare("UPDATE cesta SET cantidad = ? WHERE id_usuario = ? AND id_producto = ?");
             $stmt->execute([$cantidad, $id_usuario, $id_producto]);
@@ -280,10 +280,10 @@ public function agregarProductoACesta($id_usuario, $id_producto, $cantidad)
             $stmt->execute([$id_usuario, $id_producto, $cantidad]);
         }
 
-        return true; // Indicar que la operación fue exitosa
+        return true; 
     } catch (PDOException $e) {
         echo "Error al agregar producto a la cesta: " . $e->getMessage();
-        return false; // Indicar que hubo un error en la operación
+        return false; 
     }
 }
 
@@ -306,22 +306,22 @@ public function obtenerProductosEnCesta($id_usuario) {
 public function actualizarPerfil($id_usuario, $datos_actualizados, $foto_perfil)
 {
     try {
-        // Variables para la foto de perfil
+       
         $foto_perfil_nombre = '';
 
-        // Verificar si se subió una nueva foto de perfil
+      
         if (!empty($foto_perfil) && $foto_perfil['error'] === 0) {
             $foto_perfil_nombre = $foto_perfil['name'];
 
-            // Directorio donde se almacenarán las fotos de perfil
+      
             $directorio_destino = __DIR__ . '/../../app/archivos/img/usuario/';
             $ruta_destino = $directorio_destino . $foto_perfil_nombre;
 
-            // Mover la foto a la carpeta de destino
+           
             move_uploaded_file($foto_perfil['tmp_name'], $ruta_destino);
         }
 
-        // Construir la consulta SQL para actualizar el perfil del usuario
+       
         $sql = "UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, telefono = :telefono, ciudad = :ciudad, pais = :pais, email = :email, direccion = :direccion, codigo_postal = :codigo_postal";
 
         // Agregar la actualización de la foto de perfil solo si se subió una nueva
@@ -373,17 +373,17 @@ public function actualizarPerfil($id_usuario, $datos_actualizados, $foto_perfil)
 
 public function registrarPedido($id_usuario, $total) {
     try {
-        // Obtener la fecha y hora actuales
+        
         $fecha_pedido = date('Y-m-d H:i:s');
 
-        // Preparar la consulta SQL para registrar el pedido
+       
         $sql = "INSERT INTO pedidos (id_usuario, fecha_pedido, total, estado) VALUES (?, ?, ?, 'pendiente')";
         $stmt = $this->conexion->prepare($sql);
 
-        // Ejecutar la consulta con los valores proporcionados
+      
         $stmt->execute([$id_usuario, $fecha_pedido, $total]);
 
-        // Devolver el ID del pedido recién registrado
+       
         return $this->conexion->lastInsertId();
     } catch (PDOException $e) {
         echo "Error al registrar el pedido: " . $e->getMessage();
@@ -393,72 +393,72 @@ public function registrarPedido($id_usuario, $total) {
 
 public function registrarLineaPedido($id_pedido, $id_producto, $cantidad, $precio) {
     try {
-        // Preparar la consulta SQL para insertar una nueva línea de pedido
+        
         $sql = "INSERT INTO lineas_pedido (id_pedido, id_producto, cantidad, precio) VALUES (?, ?, ?, ?)";
 
-        // Preparar y ejecutar la consulta
+        
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute([$id_pedido, $id_producto, $cantidad, $precio]);
 
-        // Devolver el ID de la línea de pedido recién insertada
+       
         return $this->conexion->lastInsertId();
     } catch (PDOException $e) {
         echo "Error al registrar línea de pedido: " . $e->getMessage();
-        return false; // Indicar que hubo un error al registrar la línea de pedido
+        return false; 
     }
 }
  // Función para generar una factura y asociarla a un pedido
  public function generarFactura($pedido_id, $usuario_id, $productos_cesta, $total) {
     try {
-        // Crear un nuevo registro en la tabla 'facturas' para asociarla al pedido
+        
         $sql = "INSERT INTO facturas (id_pedido, id_usuario, fecha_factura, total, iva, forma_pago) VALUES (:id_pedido, :id_usuario, NOW(), :total, :iva, 'Tarjeta de crédito')";
         $stmt = $this->conexion->prepare($sql);
         
-        // Calcular el total con IVA (asumiendo un 21% de IVA)
+        
         $iva = $total * 0.21;
         $total_con_iva = $total + $iva;
 
-        // Asignar los valores a los parámetros de la consulta
+      
         $stmt->bindParam(':id_pedido', $pedido_id, PDO::PARAM_INT);
         $stmt->bindParam(':id_usuario', $usuario_id, PDO::PARAM_INT);
         $stmt->bindParam(':total', $total_con_iva, PDO::PARAM_STR);
         $stmt->bindParam(':iva', $iva, PDO::PARAM_STR);
         
-        // Ejecutar la consulta
+       
         $stmt->execute();
 
-        // Obtener el ID de la factura recién generada
+      
         $factura_id = $this->conexion->lastInsertId();
 
-        // Registrar los detalles de la factura (productos comprados)
+      
         foreach ($productos_cesta as $producto) {
             $this->registrarDetalleFactura($factura_id, $producto['id_producto'], $producto['nombre'], $producto['cantidad'], $producto['precio']);
         }
 
-        return $factura_id; // Devolver el ID de la factura generada
+        return $factura_id; 
     } catch (PDOException $e) {
         echo "Error al generar la factura: " . $e->getMessage();
-        return false; // Indicar que hubo un error al generar la factura
+        return false; 
     }
 }
-// Función para registrar los detalles de una factura (productos comprados)
+
 private function registrarDetalleFactura($factura_id, $id_producto, $nombre_producto, $cantidad, $precio_unitario) {
     try {
-        // Preparar la consulta SQL para insertar los detalles de la factura
+       
         $sql = "INSERT INTO detalles_factura (id_factura, id_producto, nombre_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conexion->prepare($sql);
         
-        // Ejecutar la consulta con los valores proporcionados
+       
         $stmt->execute([$factura_id, $id_producto, $nombre_producto, $cantidad, $precio_unitario]);
     } catch (PDOException $e) {
         echo "Error al registrar detalles de factura: " . $e->getMessage();
-        return false; // Indicar que hubo un error al registrar los detalles de la factura
+        return false; 
     }
 }
 
 public function eliminarPedido($pedido_id) {
     try {
-        // Preparar la consulta SQL para eliminar el pedido
+      
         $sql = "DELETE FROM pedidos WHERE id_pedido = ?";
         $stmt = $this->conexion->prepare($sql);
 
@@ -480,14 +480,14 @@ public function eliminarPedido($pedido_id) {
 public function editarPedido($pedido_id, $nuevo_estado, $transportista, $metodo_pago)
 {
     try {
-        // Preparar la consulta SQL para actualizar el estado, transportista y método de pago del pedido
+       
         $sql = "UPDATE pedidos SET estado = ?, transportista = ?, metodo_pago = ? WHERE id_pedido = ?";
         $stmt = $this->conexion->prepare($sql);
 
-        // Ejecutar la consulta con los nuevos datos y el ID del pedido
+       
         $stmt->execute([$nuevo_estado, $transportista, $metodo_pago, $pedido_id]);
 
-        // Devolver true si se actualizó correctamente
+        
         return true;
     } catch (PDOException $e) {
         echo "Error al editar el pedido: " . $e->getMessage();
@@ -497,17 +497,17 @@ public function editarPedido($pedido_id, $nuevo_estado, $transportista, $metodo_
 public function obtenerFacturaPorPedido($pedido_id)
 {
     try {
-        // Preparar la consulta SQL para obtener la factura asociada al pedido
+      
         $sql = "SELECT * FROM facturas WHERE id_pedido = ?";
         $stmt = $this->conexion->prepare($sql);
 
-        // Ejecutar la consulta con el ID del pedido
+      
         $stmt->execute([$pedido_id]);
 
-        // Obtener los datos de la factura
+    
         $factura = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Devolver los datos de la factura
+       
         return $factura;
     } catch (PDOException $e) {
         echo "Error al obtener la factura del pedido: " . $e->getMessage();
@@ -518,43 +518,42 @@ public function obtenerFacturaPorPedido($pedido_id)
 public function obtenerPedidosPorCliente($cliente_id)
 {
     try {
-        // Preparar la consulta SQL para obtener los pedidos del cliente
+        
         $sql = "SELECT * FROM pedidos WHERE id_usuario = ?";
         $stmt = $this->conexion->prepare($sql);
         
-        // Ejecutar la consulta con el ID del cliente
+    
         $stmt->execute([$cliente_id]);
 
-        // Obtener y devolver los resultados
+     
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Error al obtener los pedidos del cliente: " . $e->getMessage();
-        return []; // Devolver un array vacío en caso de error
+        return [];
     }
 }
 public function buscarUsuarioPorId($id_usuario){
-    // Aquí asumo que tienes una conexión a la base de datos llamada $conexion
-    // Debes reemplazar $conexion con tu conexión real a la base de datos
+   
 
-    // Preparar la consulta SQL
+    
     $sql = "SELECT * FROM usuarios WHERE id_usuario = :id_usuario";
 
-    // Preparar la sentencia
+   
     $stmt = $this->conexion->prepare($sql);
-    // Vincular parámetros
+    
     $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
 
-    // Ejecutar la consulta
+   
     $stmt->execute();
 
-    // Obtener el resultado como un array asociativo
+   
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Retornar el resultado
     return $usuario;
 }
 public function listarTodosLosUsuarios(){
-    // Realizar la consulta para obtener todos los usuarios
+   
     $sql = "SELECT * FROM usuarios";
     $result = $this->conexion->query($sql); // Execute the query
 
@@ -639,10 +638,10 @@ public function obtenerUsuarioConFotoPorId($id_usuario) {
         // Bind de parámetros
         $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
 
-        // Ejecutar la consulta
+       
         $stmt->execute();
 
-        // Obtener los resultados como un array asociativo
+      
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Retornar los datos del usuario con la foto de perfil
@@ -699,21 +698,20 @@ public function obtenerProductosCestaPorUsuario($id_usuario) {
                 INNER JOIN productos p ON c.id_producto = p.id_producto
                 WHERE c.id_usuario = :id_usuario";
 
-        // Preparar la consulta
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
 
-        // Ejecutar la consulta
+       
         $stmt->execute();
 
-        // Obtener los resultados como un array asociativo
+      
         $productos_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Devolver el resultado
         return $productos_comprados;
 
     } catch (PDOException $e) {
-        // Manejo de errores - puedes personalizar esto según tus necesidades
+     
         echo "Error al obtener productos de la cesta: " . $e->getMessage();
         return false;
     }

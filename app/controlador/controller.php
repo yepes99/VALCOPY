@@ -14,28 +14,28 @@ class Controller
     public function registro()
     {
         $params = array(
-            'user' => '', // Nombre de usuario o apodo
-            'nombre' => null, // Nombre del usuario
-            'apellidos' => null, // Apellidos del usuario
-            'email' => '', // Correo electrónico del usuario (único)
-            'pass' => '', // Contraseña del usuario
-            'pass2' => '', // Confirmación de contraseña del usuario
-            'telefono' => null, // Número de teléfono del usuario
-            'direccion' => null, // Dirección del usuario
-            'ciudad' => null, // Ciudad del usuario
-            'codigo_postal' => null, // Código postal del usuario
-            'pais' => null, // País del usuario
-            'tipo_usuario' => 'cliente', // Tipo de usuario (cliente o administrador)
-            'fecha_alta' => date('Y-m-d H:i:s'), // Fecha de alta del usuario (DATETIME)
-            'fecha_baja' => null, // Fecha de baja del usuario (DATETIME)
-            'foto_perfil' => null, // Archivo de imagen de perfil del usuario
-            'mensaje' => [] // Mensajes de error o éxito durante el proceso
+            'user' => '', 
+            'nombre' => null, 
+            'apellidos' => null, 
+            'email' => '', 
+            'pass' => '', 
+            'pass2' => '', 
+            'telefono' => null, 
+            'direccion' => null, 
+            'ciudad' => null, 
+            'codigo_postal' => null, 
+            'pais' => null,
+            'tipo_usuario' => 'cliente', 
+            'fecha_alta' => date('Y-m-d H:i:s'), 
+            'fecha_baja' => null, 
+            'foto_perfil' => null, 
+            'mensaje' => [] 
         );
 
         $consulta = new Consultas(); // Crear objeto Consultas
 
         if (isset($_POST["bAceptar"])) {
-            // Recogemos datos de los inputs
+     
             $params["user"] = recoge("user");
             $params["email"] = recoge("email");
             $params["pass"] = recoge("pass");
@@ -75,18 +75,17 @@ class Controller
             if (empty($params["mensaje"])) {
                 if ($consulta->insertarUsuario($params)) {
                     echo "¡Registro exitoso!";
-                    // Redirigir u otro flujo de la aplicación después de la inserción
+                    
                 } else {
                     echo "Error al registrar el usuario.";
                 }
             } else {
-                // Si hay mensajes de error, imprimirlos
+             
                 echo "Error al registrar el usuario. Detalles:";
                 print_r($params["mensaje"]);
             }
         }
 
-        // Incluir la vista para mostrar el formulario de registro
         require __DIR__ . '/../../web/templates/registro.php';
     }
 
@@ -103,8 +102,7 @@ class Controller
     public function gestionProductos(){
 
 
-            
-
+    
 
         require __DIR__ . '/../../web/templates/gestionProductos.php';
     }
@@ -210,7 +208,7 @@ class Controller
 
 public function editarProducto()
 {
-    // Verificar si se envió el formulario
+ 
     if (isset($_POST["bAceptar"])) {
         // Recoger los datos del formulario
         $id_producto = $_POST["id_producto"];
@@ -243,7 +241,7 @@ public function editarProducto()
 
 public function borrarProducto()
     {
-        // Verificar si se envió el formulario para borrar el producto
+  
         if (isset($_POST["bBorrar"])) {
             // Recoger el ID del producto a borrar
             $id_producto = $_POST["id_producto"];
@@ -262,7 +260,7 @@ public function borrarProducto()
             }
         }
 
-        // Incluir la vista del formulario para borrar un producto
+       
         require __DIR__ . '/../../web/templates/borrarProducto.php';
     }
 
@@ -286,9 +284,9 @@ public function borrarProducto()
     public function inicioSesion()
 {
     $params = array(
-        'email' => '', // Correo electrónico del usuario
-        'pass' => '', // Contraseña del usuario
-        'mensaje' => array() // Mensajes de error o éxito durante el proceso
+        'email' => '', 
+        'pass' => '', 
+        'mensaje' => array() 
     );
 
     if (isset($_POST["bAceptar"])) {
@@ -479,7 +477,7 @@ if ($usuario) {
 
 
 public function visualizarProductos(){
-    // Crear una instancia de la clase Consultas
+   
     $consultas = new Consultas();
 
     // Obtener los productos de la base de datos
